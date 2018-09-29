@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PrepareListActivity" />
+        <activity android:name=".AddExpensesActivity" />
+        <activity android:name=".CalculateExpensesActivity" />
+        <activity android:name=".DeleteExpensesActivity"></activity>
     </application>
 
 </manifest>
