@@ -1,5 +1,6 @@
 package com.example.bijay.expensemanagement;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final String TAG = "[MainActivity]";
+    private static final String TAG = "[MainActivity]";
     private Button btnPrepareExpensesList;
     private Button btnAddExpenses;
     private Button btnCalculateExpenses;
@@ -35,25 +36,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        Intent intent = null;
+
         switch (view.getId())
         {
             case R.id.btnPrepareExpensesList:
                 Toast.makeText(this, "Preparation of Expenses List Page", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, PrepareListActivity.class);
+                startActivity(intent);
 
                 Log.d(TAG, "[onClick][btnPrepareExpensesList] Everything is fine");
                 break;
             case R.id.btnAddExpenses:
                 Toast.makeText(this, "Add Expenses Page", Toast.LENGTH_LONG).show();
+                intent = new Intent(this, AddExpensesActivity.class);
+                startActivity(intent);
 
                 Log.d(TAG, "[onClick][btnAddExpenses] Everything is fine");
                 break;
             case R.id.btnCalculateExpenses:
                 Toast.makeText(this, "Calculate Expenses Page", Toast.LENGTH_LONG).show();
+                intent = new Intent(this, CalculateExpensesActivity.class);
+                startActivity(intent);
 
                 Log.d(TAG, "[onClick][btnCalculateExpenses] Everything is fine");
                 break;
             case R.id.btnDeleteExpenses:
                 Toast.makeText(this, "Delete Expenses Page", Toast.LENGTH_LONG).show();
+                intent = new Intent(this, DeleteExpensesActivity.class);
+                startActivity(intent);
 
                 Log.d(TAG, "[onClick][btnDeleteExpenses] Everything is fine");
                 break;
