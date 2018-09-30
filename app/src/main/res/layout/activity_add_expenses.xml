@@ -6,122 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".AddExpensesActivity">
 
-    <Button
-        android:id="@+id/btnCreateNewGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:inputType="textPersonName"
-        android:text="Create New Group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/addExpensesFirstView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/add_expenses_first_view" />
 
-    <Button
-        android:id="@+id/btnUpdateExistingGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:inputType="textPersonName"
-        android:text="Update Existing Group"
-        app:layout_constraintEnd_toEndOf="@+id/btnCreateNewGroup"
-        app:layout_constraintStart_toStartOf="@+id/btnCreateNewGroup"
-        app:layout_constraintTop_toBottomOf="@+id/btnCreateNewGroup" />
+    <include
+        android:id="@+id/createExpensesGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/create_new_expense_group" />
 
-    <EditText
-        android:id="@+id/etDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Date"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/btnUpdateExistingGroup"
-        app:layout_constraintStart_toStartOf="@+id/btnUpdateExistingGroup"
-        app:layout_constraintTop_toBottomOf="@+id/btnUpdateExistingGroup" />
+    <include
+        android:id="@+id/addExpenses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/add_expenses" />
 
-    <EditText
-        android:id="@+id/etPurpose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Purpose"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/etForWhom"
-        app:layout_constraintTop_toBottomOf="@+id/etForWhom" />
-
-    <EditText
-        android:id="@+id/etForWhom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="For Whom"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/etByWhom"
-        app:layout_constraintTop_toBottomOf="@+id/etByWhom" />
-
-    <EditText
-        android:id="@+id/etByWhom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="By Whom"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/etDate"
-        app:layout_constraintTop_toBottomOf="@+id/etDate" />
-
-    <EditText
-        android:id="@+id/etProductName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Product Name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/etPurpose"
-        app:layout_constraintStart_toStartOf="@+id/etPurpose"
-        app:layout_constraintTop_toBottomOf="@+id/etPurpose" />
-
-    <EditText
-        android:id="@+id/etAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Amount"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/btnSave"
-        app:layout_constraintEnd_toEndOf="@+id/etProductName"
-        app:layout_constraintStart_toStartOf="@+id/etProductName"
-        app:layout_constraintTop_toBottomOf="@+id/etProductName" />
-
-    <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Canceel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.208"
-        app:layout_constraintStart_toEndOf="@+id/btnSave"
-        app:layout_constraintTop_toBottomOf="@+id/etAmount" />
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="8dp"
-        android:text="Save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAmount" />
 </android.support.constraint.ConstraintLayout>

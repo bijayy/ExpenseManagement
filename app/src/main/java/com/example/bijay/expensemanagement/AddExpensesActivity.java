@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddExpensesActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
     private static final String TAG = "[AddExpensesActivity]";
@@ -26,6 +29,8 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
     private EditText etPurpose;
     private EditText etProductName;
     private EditText etAmount;
+
+    private List<EditText> editTexts = new ArrayList<EditText>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,12 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
         etPurpose = findViewById(R.id.etPurpose);
         etProductName = findViewById(R.id.etProductName);
         etAmount = findViewById(R.id.etAmount);
+        editTexts.add(etDate);
+        editTexts.add(etByWhom);
+        editTexts.add(etForWhom);
+        editTexts.add(etPurpose);
+        editTexts.add(etProductName);
+        editTexts.add(etAmount);
         Log.d(TAG, "[onCreate] EditText initialization is done");
 
         etDate.setOnFocusChangeListener(this);
@@ -90,13 +101,13 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
                 Log.d(TAG, "[onClick(] btnUpdateExistingGroup is fine");
                 break;
             case R.id.btnSave:
-                if(isValid) {
+                validateRequiredFields();
 
+                if(isValid) {
                     Toast.makeText(this, "Expense Saved Successfully", Toast.LENGTH_LONG).show();
                     Log.d(TAG, "[onClick(] btnSave is fine");
                 }
                 else {
-                    Toast.makeText(this, "Please provide the required field", Toast.LENGTH_LONG).show();
                     Log.d(TAG, "[onClick(] btnSave will not work as required field not provided");
                 }
                 break;
@@ -123,10 +134,14 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-        validateExpensesViews((EditText) v);
-        Toast.makeText(this, "Key Listener", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "[onKey] is fired. Events: " + event);
+
+        if(event.getAction() == KeyEvent.ACTION_UP) {
+            validateExpensesViews((EditText) v);
+            Log.d(TAG, "[onKey] is fired. [KeyEvent.ACTION_UP]");
+            return true;
+        }
+
         return false;
     }
 
@@ -157,17 +172,29 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
         Log.d(TAG, "[showCreateExpensesViews] is fine");
     }
 
-    private void validateExpensesViews(EditText editText) {
+    private void validateRequiredFields() {
+        Log.d(TAG, "[validateRequiredField] before validation, isValid: " + isValid);
+
+        for(EditText editText : editTexts) {
+            if(!validateExpensesViews(editText)) {
+                break;
+            }
+        }
+
+        Log.d(TAG, "[validateRequiredField] after validation, isValid: " + isValid);
+    }
+
+    private boolean validateExpensesViews(EditText editText) {
         Log.d(TAG, "[validateExpensesViews] isEmpty: " + editText.getText().toString().isEmpty());
 
         if(editText.getText().toString().isEmpty()) {
             editText.setError("Required");
-            isValid = false;
             Log.d(TAG, "[validateExpensesViews] not valid");
+            return false;
         }
         else {
-            isValid = true;
             Log.d(TAG, "[validateExpensesViews] valid");
+            return  true;
         }
     }
 }
