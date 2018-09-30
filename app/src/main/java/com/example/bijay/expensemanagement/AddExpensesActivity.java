@@ -1,19 +1,19 @@
 package com.example.bijay.expensemanagement;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddExpensesActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
+public class AddExpensesActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
     private static final String TAG = "[AddExpensesActivity]";
+    private boolean isValid = false;
 
     private Button btnCreateNewGroup;
     private Button btnUpdateExistingGroup;
@@ -48,6 +48,18 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 
         etDate.setOnFocusChangeListener(this);
         etByWhom.setOnFocusChangeListener(this);
+        etForWhom.setOnFocusChangeListener(this);
+        etPurpose.setOnFocusChangeListener(this);
+        etProductName.setOnFocusChangeListener(this);
+        etAmount.setOnFocusChangeListener(this);
+
+        etDate.setOnKeyListener(this);
+        etByWhom.setOnKeyListener(this);
+        etForWhom.setOnKeyListener(this);
+        etPurpose.setOnKeyListener(this);
+        etProductName.setOnKeyListener(this);
+        etAmount.setOnKeyListener(this);
+        Log.d(TAG, "[onCreate] OnFocusChangeListener on EditText is done");
 
         btnCreateNewGroup.setOnClickListener(this);
         btnUpdateExistingGroup.setOnClickListener(this);
@@ -78,9 +90,15 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
                 Log.d(TAG, "[onClick(] btnUpdateExistingGroup is fine");
                 break;
             case R.id.btnSave:
+                if(isValid) {
 
-                Toast.makeText(this, "Expense Saved Successfully", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "[onClick(] btnSave is fine");
+                    Toast.makeText(this, "Expense Saved Successfully", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "[onClick(] btnSave is fine");
+                }
+                else {
+                    Toast.makeText(this, "Please provide the required field", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "[onClick(] btnSave will not work as required field not provided");
+                }
                 break;
             case R.id.btnCancel:
                 intent = new Intent(this, MainActivity.class);
@@ -97,6 +115,20 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        validateExpensesViews((EditText) v);
+        Log.d(TAG, "[onFocusChange] is fine");
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+        validateExpensesViews((EditText) v);
+        Toast.makeText(this, "Key Listener", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "[onKey] is fired. Events: " + event);
+        return false;
+    }
 
     private void hideCreateExpensesViews() {
         etDate.setVisibility(View.GONE);
@@ -108,6 +140,7 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 
         btnSave.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
+        Log.d(TAG, "[hideCreateExpensesViews] is fine");
     }
 
     private void showCreateExpensesViews() {
@@ -120,17 +153,21 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 
         btnSave.setVisibility(View.VISIBLE);
         btnCancel.setVisibility(View.VISIBLE);
+
+        Log.d(TAG, "[showCreateExpensesViews] is fine");
     }
 
     private void validateExpensesViews(EditText editText) {
-        if(editText.isDirty() && editText.getText().toString().isEmpty()) {
-            editText.setTextColor(Color.RED);
-            editText.setHint(editText.getText().toString() + " is required");
-        }
-    }
+        Log.d(TAG, "[validateExpensesViews] isEmpty: " + editText.getText().toString().isEmpty());
 
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        validateExpensesViews((EditText) v);
+        if(editText.getText().toString().isEmpty()) {
+            editText.setError("Required");
+            isValid = false;
+            Log.d(TAG, "[validateExpensesViews] not valid");
+        }
+        else {
+            isValid = true;
+            Log.d(TAG, "[validateExpensesViews] valid");
+        }
     }
 }
