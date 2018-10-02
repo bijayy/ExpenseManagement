@@ -21,20 +21,22 @@ public class SqliteDatabaseAdapter {
 
     /**
      * Insert data of PersonModel in sqlite.
-     * @param name
-     * @param phoneNumber
-     * @param emailId
-     * @param groupName
+     * @param person
      */
-    public long addPerson(String name, String phoneNumber, String emailId, String groupName) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(sqliteDatabaseHelper.NAME, name);
-        contentValues.put(sqliteDatabaseHelper.PHONE_NUMBER, phoneNumber);
-        contentValues.put(sqliteDatabaseHelper.EMAIL, emailId);
-        contentValues.put(sqliteDatabaseHelper.GROUP_NAME, groupName);
+    public long addPerson(PersonModel person) {
+        if (person != null) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(sqliteDatabaseHelper.NAME, person.Name);
+            contentValues.put(sqliteDatabaseHelper.PHONE_NUMBER, person.MobileNumber);
+            contentValues.put(sqliteDatabaseHelper.EMAIL, person.Email);
+            contentValues.put(sqliteDatabaseHelper.GROUP_NAME, person.GroupName);
 
-        Log.d(TAG, "addPerson() successfully running in thread: " + Thread.currentThread().getName());
-        return sqliteDatabaseHelper.getWritableDatabase().insert(sqliteDatabaseHelper.TABLE_NAME, null, contentValues);
+            Log.d(TAG, "addPerson() successfully added person details running in thread: " + Thread.currentThread().getName());
+            return sqliteDatabaseHelper.getWritableDatabase().insert(sqliteDatabaseHelper.TABLE_NAME, null, contentValues);
+        }
+
+        Log.d(TAG, "addPerson() blank person details cannot be added running in thread: " + Thread.currentThread().getName());
+        return 0;
     }
 
     /**

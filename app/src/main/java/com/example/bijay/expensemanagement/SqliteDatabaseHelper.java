@@ -16,12 +16,19 @@ public class SqliteDatabaseHelper extends SQLiteOpenHelper {
     static final String GROUP_NAME = "Group Name";
     static final String ID = "_id";
 
+    static final String EXPENSES_TABLE_NAME = "Expenses";
+    static final String EXPENSES_NAME = "Name";
+    static final String EXPENSES_PHONE_NUMBER = "PhoneNumber";
+    static final String EXPENSES_EMAIL = "Email";
+    static final String EXPENSES_GROUP_NAME = "GroupName";
+    static final String EXPENSES_ID = "_id";
+
     private static final String DATABASE_NAME = "Person.db";
     private static final int DATABASE_VERSION = 1;
 
     private String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
-            ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " VARCHAR(50), " + PHONE_NUMBER + " VARCHAR(15)) " +
-            EMAIL + " VARCHAR(50)" + GROUP_NAME + " VARCHAR(50);";
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " VARCHAR(50), " + PHONE_NUMBER + " VARCHAR(15), " +
+            EMAIL + " VARCHAR(50), " + GROUP_NAME + " VARCHAR(50);";
     private String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     SqliteDatabaseHelper(Context context) {

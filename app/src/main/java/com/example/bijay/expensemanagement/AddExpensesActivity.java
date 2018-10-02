@@ -222,6 +222,9 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 					person.GroupName = spinnerExpensesGroup.getSelectedItem().toString();
 					persons.add(person);
 
+					SqliteDatabaseAdapter sqliteDatabaseAdapter = new SqliteDatabaseAdapter(this);
+					sqliteDatabaseAdapter.addPerson(person);
+
 					Toast.makeText(this, "Details Of ["+ person.Name + " " + person.GroupName +"] Saved Successfully", Toast.LENGTH_LONG).show();
 					Log.d(TAG, "[onClick(] btnAddPerson is fine");
 				}
