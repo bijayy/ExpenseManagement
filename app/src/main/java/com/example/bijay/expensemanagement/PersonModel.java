@@ -1,7 +1,7 @@
 package com.example.bijay.expensemanagement;
 
 public class PersonModel {
-    int ID;
+    String ID;
     String Name;
     String MobileNumber;
     String Email;
