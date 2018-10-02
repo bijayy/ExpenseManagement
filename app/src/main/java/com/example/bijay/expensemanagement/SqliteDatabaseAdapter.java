@@ -5,89 +5,145 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SqliteDatabaseAdapter {
 
     private static final String TAG = SqliteDatabaseHelper.class.getSimpleName();
-    private val sqliteDatabaseHelper: SqliteDatabaseHelper
+    private SqliteDatabaseHelper sqliteDatabaseHelper;
 
-    constructor(context: Context?) {
-        sqliteDatabaseHelper = SqliteDatabaseHelper(context)
+    SqliteDatabaseAdapter(Context context) {
+        sqliteDatabaseHelper = new SqliteDatabaseHelper(context);
 
-        Log.d(TAG, "Constructor running in thread: ${Thread.currentThread().name}")
+        Log.d(TAG, "Constructor running in thread: " + Thread.currentThread().getName());
     }
 
     /**
-     * Insert name and age of employ in sqlite.
+     * Insert data of PersonModel in sqlite.
      * @param name
-     * @param age
+     * @param phoneNumber
+     * @param emailId
+     * @param groupName
      */
-    fun insert(name: String, age: String): Long {
-        val contentValues = ContentValues()
-        contentValues.put(sqliteDatabaseHelper.NAME, name)
-        contentValues.put(sqliteDatabaseHelper.AGE, age)
+    public long addPerson(String name, String phoneNumber, String emailId, String groupName) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(sqliteDatabaseHelper.NAME, name);
+        contentValues.put(sqliteDatabaseHelper.PHONE_NUMBER, phoneNumber);
+        contentValues.put(sqliteDatabaseHelper.EMAIL, emailId);
+        contentValues.put(sqliteDatabaseHelper.GROUP_NAME, groupName);
 
-        Log.d(TAG, "insert() running in thread: ${Thread.currentThread().name}")
-        return sqliteDatabaseHelper.writableDatabase.insert(sqliteDatabaseHelper.TABLE_NAME, null, contentValues)
+        Log.d(TAG, "addPerson() successfully running in thread: " + Thread.currentThread().getName());
+        return sqliteDatabaseHelper.getWritableDatabase().insert(sqliteDatabaseHelper.TABLE_NAME, null, contentValues);
     }
 
     /**
-     * Update name of employ.
-     * @param oldName
-     * @param newName
+     * Update data of PersonModel in sqlite.
+     * @param id
+     * @param name
+     * @param phoneNumber
+     * @param emailId
+     * @param groupName
      */
-    fun update(oldName: String, newName: String): Int {
-        val contentValues = ContentValues()
-        contentValues.put(sqliteDatabaseHelper.NAME, newName)
+    public int updatePersonById(String id, String name, String phoneNumber, String emailId, String groupName) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(sqliteDatabaseHelper.NAME, name);
+        contentValues.put(sqliteDatabaseHelper.PHONE_NUMBER, phoneNumber);
+        contentValues.put(sqliteDatabaseHelper.EMAIL, emailId);
+        contentValues.put(sqliteDatabaseHelper.GROUP_NAME, groupName);
 
-        val whereArgs: Array<String> = arrayOf(oldName)
-        val totalRowUpdated = sqliteDatabaseHelper.writableDatabase.update(sqliteDatabaseHelper.TABLE_NAME,  contentValues,"${sqliteDatabaseHelper.NAME}=?", whereArgs)
+        String[] whereArgs = {id};
+        int totalRowUpdated = sqliteDatabaseHelper.getWritableDatabase().update(sqliteDatabaseHelper.TABLE_NAME,  contentValues,sqliteDatabaseHelper.ID +"=?", whereArgs);
 
-        Log.d(TAG, "update() running in thread: ${Thread.currentThread().name}")
+        if(totalRowUpdated < 1)
+            Log.d(TAG, "updatePersonById() unot found person id: "+ id +"  running in thread: " + Thread.currentThread().getName());
+
+        Log.d(TAG, "updatePersonById() updated person id "+ id +" running in thread: " + Thread.currentThread().getName());
         return totalRowUpdated;
     }
 
     /**
-     * Delete employ by name.
-     * @param name
+     * Delete PersonModel by id.
+     * @param id
      */
-    fun delete(name: String): Int {
-        val whereArgs = arrayOf(name)
-        val totalRowDeleted = sqliteDatabaseHelper.writableDatabase.delete(sqliteDatabaseHelper.TABLE_NAME, "${sqliteDatabaseHelper.NAME} = ?", whereArgs)
+    public int deletePersonById(String id) {
+        String[] whereArgs = {id};
+        int totalRowDeleted = sqliteDatabaseHelper.getWritableDatabase().delete(sqliteDatabaseHelper.TABLE_NAME, sqliteDatabaseHelper.ID +"=?", whereArgs);
 
-        Log.d(TAG, "delete() running in thread: ${Thread.currentThread().name}")
-        return totalRowDeleted
+        if(totalRowDeleted < 1)
+            Log.d(TAG, "deletePersonById() not found person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+
+        Log.d(TAG, "deletePersonById() deleted person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+        return totalRowDeleted;
     }
 
     /**
-     * Select emplyee by name or select all. Pass nothing to select all records of employee.
-     * @param name is optional.
+     * Select PersonModel select all.
      */
-    fun select(name: String = ""): String {
+    public List<PersonModel> getPersons() {
 
-        val buffer = StringBuffer()
-        val cursor: Cursor
-        val colums: Array<String> = arrayOf<String>(sqliteDatabaseHelper.ID, sqliteDatabaseHelper.NAME, sqliteDatabaseHelper.AGE)
-        val selectionArgs = arrayOf(name)
+        List<PersonModel> personModelList = new ArrayList<>();
+        Cursor cursor = null;
+        String[] colums = { sqliteDatabaseHelper.ID, sqliteDatabaseHelper.NAME, sqliteDatabaseHelper.PHONE_NUMBER,
+                sqliteDatabaseHelper.EMAIL, sqliteDatabaseHelper.GROUP_NAME};
 
-        if(name == "")
-            cursor = sqliteDatabaseHelper.writableDatabase.query(sqliteDatabaseHelper.TABLE_NAME, colums, null, null, null, null, null)
-        else
-            cursor = sqliteDatabaseHelper.writableDatabase.query(sqliteDatabaseHelper.TABLE_NAME, colums, "${sqliteDatabaseHelper.NAME} = ?", selectionArgs, null, null, null)
+        cursor = sqliteDatabaseHelper.getWritableDatabase().query(sqliteDatabaseHelper.TABLE_NAME, colums, null, null, null, null, null);
 
         while(cursor.moveToNext()) {
-            val employ = Employ()
-            val idIndex = cursor.getColumnIndex(sqliteDatabaseHelper.ID)
-            val nameIndex = cursor.getColumnIndex(sqliteDatabaseHelper.NAME)
-            val ageIndex = cursor.getColumnIndex(sqliteDatabaseHelper.AGE)
+            PersonModel personModel = new PersonModel();
+            int idIndex = cursor.getColumnIndex(sqliteDatabaseHelper.ID);
+            int nameIndex = cursor.getColumnIndex(sqliteDatabaseHelper.NAME);
+            int phoneNumberIndex = cursor.getColumnIndex(sqliteDatabaseHelper.PHONE_NUMBER);
+            int emailIndex = cursor.getColumnIndex(sqliteDatabaseHelper.EMAIL);
+            int groupNameIndex = cursor.getColumnIndex(sqliteDatabaseHelper.GROUP_NAME);
 
-            employ.ID = cursor.getInt(idIndex)
-            employ.Name = cursor.getString(nameIndex)
-            employ.Age = cursor.getString(ageIndex)
+            personModel.ID = cursor.getString(idIndex);
+            personModel.Name = cursor.getString(nameIndex);
+            personModel.MobileNumber = cursor.getString(phoneNumberIndex);
+            personModel.Email = cursor.getString(emailIndex);
+            personModel.GroupName = cursor.getString(groupNameIndex);
 
-            buffer.append("${employ.ID} ${employ.Name} ${employ.Age} \n")
+            personModelList.add(personModel);
         }
 
-        Log.d(TAG, "select() running in thread: ${Thread.currentThread().name}")
-        return buffer.toString()
+        if(personModelList.isEmpty())
+            Log.d(TAG, "getPersons() found no records running in thread: " + Thread.currentThread().getName());
+
+        Log.d(TAG, "getPersons() found records running in thread: " + Thread.currentThread().getName());
+        return personModelList;
+    }
+
+    /**
+     * Select PersonModel by id.
+     * @param id
+     */
+    public PersonModel getPersonById(String id) {
+        Cursor cursor = null;
+        String[] colums = { sqliteDatabaseHelper.ID, sqliteDatabaseHelper.NAME, sqliteDatabaseHelper.PHONE_NUMBER,
+                sqliteDatabaseHelper.EMAIL, sqliteDatabaseHelper.GROUP_NAME};
+        String[]  selectionArgs = {id};
+
+        cursor = sqliteDatabaseHelper.getWritableDatabase().query(sqliteDatabaseHelper.TABLE_NAME, colums, sqliteDatabaseHelper.ID +"=?", selectionArgs, null, null, null);
+
+        if(cursor.moveToNext()) {
+            PersonModel personModel = new PersonModel();
+            int idIndex = cursor.getColumnIndex(sqliteDatabaseHelper.ID);
+            int nameIndex = cursor.getColumnIndex(sqliteDatabaseHelper.NAME);
+            int phoneNumberIndex = cursor.getColumnIndex(sqliteDatabaseHelper.PHONE_NUMBER);
+            int emailIndex = cursor.getColumnIndex(sqliteDatabaseHelper.EMAIL);
+            int groupNameIndex = cursor.getColumnIndex(sqliteDatabaseHelper.GROUP_NAME);
+
+            personModel.ID = cursor.getString(idIndex);
+            personModel.Name = cursor.getString(nameIndex);
+            personModel.MobileNumber = cursor.getString(phoneNumberIndex);
+            personModel.Email = cursor.getString(emailIndex);
+            personModel.GroupName = cursor.getString(groupNameIndex);
+
+            Log.d(TAG, "getPersonById() found record of person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+            return personModel;
+        }
+
+        Log.d(TAG, "getPersonById() no record running in thread: " + Thread.currentThread().getName());
+        return null;
     }
 }

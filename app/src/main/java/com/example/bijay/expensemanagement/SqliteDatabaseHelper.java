@@ -9,12 +9,12 @@ public class SqliteDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = SqliteDatabaseHelper.class.getSimpleName();
 
-    private static final String TABLE_NAME = "Person";
-    private static final String NAME = "Name";
-    private static final String PHONE_NUMBER = "Phone Number";
-    private static final String EMAIL = "Email";
-    private static final String GROUP_NAME = "Group Name";
-    private static final String ID = "_id";
+    static final String TABLE_NAME = "Person";
+    static final String NAME = "Name";
+    static final String PHONE_NUMBER = "Phone Number";
+    static final String EMAIL = "Email";
+    static final String GROUP_NAME = "Group Name";
+    static final String ID = "_id";
 
     private static final String DATABASE_NAME = "Person.db";
     private static final int DATABASE_VERSION = 1;
