@@ -18,9 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="spinnerExpenseGroups"
-        app:layout_constraintStart_toStartOf="spinnerExpenseGroups"
-        app:layout_constraintTop_toTopOf="spinnerExpenseGroups" />
+        app:layout_constraintEnd_toEndOf="@+id/spinnerExpenseGroups"
+        app:layout_constraintStart_toStartOf="@+id/spinnerExpenseGroups"
+        app:layout_constraintTop_toTopOf="@+id/spinnerExpenseGroups" />
 
     <EditText
         android:id="@+id/etDate"

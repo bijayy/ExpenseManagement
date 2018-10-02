@@ -29,7 +29,7 @@ public class PersonSqliteDatabaseAdapter {
             contentValues.put(personSqliteDatabaseHelper.NAME, person.Name);
             contentValues.put(personSqliteDatabaseHelper.PHONE_NUMBER, person.MobileNumber);
             contentValues.put(personSqliteDatabaseHelper.EMAIL, person.Email);
-            contentValues.put(personSqliteDatabaseHelper.GROUP_ID, person.GroupName);
+            contentValues.put(personSqliteDatabaseHelper.GROUP_ID, person.GroupID);
 
             Log.d(TAG, "addPerson() successfully added person details running in thread: " + Thread.currentThread().getName());
             return personSqliteDatabaseHelper.getWritableDatabase().insert(personSqliteDatabaseHelper.TABLE_NAME, null, contentValues);
@@ -97,13 +97,13 @@ public class PersonSqliteDatabaseAdapter {
             int nameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.NAME);
             int phoneNumberIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.PHONE_NUMBER);
             int emailIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.EMAIL);
-            int groupNameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.GROUP_ID);
+            int groupIDIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.GROUP_ID);
 
             personModel.ID = cursor.getInt(idIndex);
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
-            personModel.GroupName = cursor.getString(groupNameIndex);
+            personModel.GroupID = cursor.getInt(groupIDIndex);
 
             personModelList.add(personModel);
         }
@@ -133,13 +133,13 @@ public class PersonSqliteDatabaseAdapter {
             int nameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.NAME);
             int phoneNumberIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.PHONE_NUMBER);
             int emailIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.EMAIL);
-            int groupNameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.GROUP_ID);
+            int groupIDIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.GROUP_ID);
 
             personModel.ID = cursor.getInt(idIndex);
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
-            personModel.GroupName = cursor.getString(groupNameIndex);
+            personModel.GroupID = cursor.getInt(groupIDIndex);
 
             Log.d(TAG, "getPersonById() found record of person id: "+ id +" running in thread: " + Thread.currentThread().getName());
             return personModel;
