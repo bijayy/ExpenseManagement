@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <Spinner
-        android:id="@+id/spinnerExpenseGroup"
+        android:id="@+id/spinnerExpenseGroups"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -21,9 +21,9 @@
         android:ems="10"
         android:hint="Date"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/spinnerExpenseGroup"
-        app:layout_constraintStart_toStartOf="@+id/spinnerExpenseGroup"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerExpenseGroup" />
+        app:layout_constraintEnd_toEndOf="@+id/spinnerExpenseGroups"
+        app:layout_constraintStart_toStartOf="@+id/spinnerExpenseGroups"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerExpenseGroups" />
 
     <EditText
         android:id="@+id/etPurpose"

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,294 +19,316 @@ import java.util.List;
 
 public class AddExpensesActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
-    private static final String TAG = "[AddExpensesActivity]";
-    private boolean isValid = false;
+	private static final String TAG = "[AddExpensesActivity]";
+	private boolean isValid = false;
 
-    private Button btnCreateNewGroup;
-    private Button btnUpdateExistingGroup;
-    private Button btnAddExpenses;
+	private Button btnCreateNewGroup;
+	private Button btnUpdateExistingGroup;
+	private Button btnAddExpenses;
 
-    private Button btnSave;
-    private Button btnCancel;
+	private Button btnSave;
+	private Button btnCancel;
 
-    private Button btnAddGroup;
-    private Button btnAddPerson;
-    private Button btnPersonGroupCancel;
+	private Button btnAddGroup;
+	private Button btnAddPerson;
+	private Button btnPersonGroupCancel;
 
-    private EditText etDate;
-    private EditText etByWhom;
-    private EditText etForWhom;
-    private EditText etPurpose;
-    private EditText etProductName;
-    private EditText etAmount;
+	private EditText etDate;
+	private EditText etByWhom;
+	private EditText etForWhom;
+	private EditText etPurpose;
+	private EditText etProductName;
+	private EditText etAmount;
 
-    private EditText etExpensesGroupName;
-    private EditText etPersonName;
-    private EditText etMobileNumber;
-    private EditText etEmailID;
+	private EditText etExpensesGroupName;
+	private EditText etPersonName;
+	private EditText etMobileNumber;
+	private EditText etEmailID;
 
-    private Spinner spinnerExpensesGroup;
-    private Spinner spinnerPersons;
+	private Spinner spinnerExpensesGroup;
+	private Spinner spinnerExpensesGroups;
 
-    private ConstraintLayout addExpensesLayout;
-    private LinearLayout createNewExpenseGroupLayout;
-    private ConstraintLayout addExpensesFirstViewLayout;
+	private ConstraintLayout addExpensesLayout;
+	private LinearLayout createNewExpenseGroupLayout;
+	private ConstraintLayout addExpensesFirstViewLayout;
 
-    private List<EditText> addExpensesEditTexts = new ArrayList<EditText>();
-    private List<EditText> addGroupEditTexts = new ArrayList<EditText>();
-    private List<EditText> addPersonEditTexts = new ArrayList<EditText>();
+	private List<EditText> addExpensesEditTexts = new ArrayList<EditText>();
+	private List<EditText> addGroupEditTexts = new ArrayList<EditText>();
+	private List<EditText> addPersonEditTexts = new ArrayList<EditText>();
 
-    private List<String> expenseGroups = new ArrayList<String>();
+	private List<String> expenseGroups = new ArrayList<String>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_expenses);
+	private List<PersonModel> persons = new ArrayList<>();
 
-        addExpensesFirstViewLayout = findViewById(R.id.addExpensesFirstView);
-        addExpensesLayout = findViewById(R.id.addExpenses);
-        createNewExpenseGroupLayout = findViewById(R.id.createExpensesGroup);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_add_expenses);
 
-        btnCreateNewGroup = findViewById(R.id.btnCreateNewGroup);
-        btnUpdateExistingGroup = findViewById(R.id.btnUpdateExistingGroup);
-        btnAddExpenses = findViewById(R.id.btnAddExpenses);
+		addExpensesFirstViewLayout = findViewById(R.id.addExpensesFirstView);
+		addExpensesLayout = findViewById(R.id.addExpenses);
+		createNewExpenseGroupLayout = findViewById(R.id.createExpensesGroup);
 
-        btnSave = findViewById(R.id.btnSave);
-        btnCancel = findViewById(R.id.btnCancel);
+		btnCreateNewGroup = findViewById(R.id.btnCreateNewGroup);
+		btnUpdateExistingGroup = findViewById(R.id.btnUpdateExistingGroup);
+		btnAddExpenses = findViewById(R.id.btnAddExpenses);
 
-        btnAddGroup = findViewById(R.id.btnAddExpensesGroup);
-        btnAddPerson = findViewById(R.id.btnAddPerson);
-        btnPersonGroupCancel = findViewById(R.id.btnCancelPerson);
-        Log.d(TAG, "[onCreate] Button initialization is done");
+		btnSave = findViewById(R.id.btnSave);
+		btnCancel = findViewById(R.id.btnCancel);
 
-        etDate = findViewById(R.id.etDate);
-        etByWhom = findViewById(R.id.etByWhom);
-        etForWhom = findViewById(R.id.etForWhom);
-        etPurpose = findViewById(R.id.etPurpose);
-        etProductName = findViewById(R.id.etProductName);
-        etAmount = findViewById(R.id.etAmount);
+		btnAddGroup = findViewById(R.id.btnAddExpensesGroup);
+		btnAddPerson = findViewById(R.id.btnAddPerson);
+		btnPersonGroupCancel = findViewById(R.id.btnCancelPerson);
+		Log.d(TAG, "[onCreate] Button initialization is done");
 
-        addExpensesEditTexts.add(etDate);
-        addExpensesEditTexts.add(etByWhom);
-        addExpensesEditTexts.add(etForWhom);
-        addExpensesEditTexts.add(etPurpose);
-        addExpensesEditTexts.add(etProductName);
-        addExpensesEditTexts.add(etAmount);
+		etDate = findViewById(R.id.etDate);
+		etByWhom = findViewById(R.id.etByWhom);
+		etForWhom = findViewById(R.id.etForWhom);
+		etPurpose = findViewById(R.id.etPurpose);
+		etProductName = findViewById(R.id.etProductName);
+		etAmount = findViewById(R.id.etAmount);
 
-        etExpensesGroupName = findViewById(R.id.etAddGroup);
-        addGroupEditTexts.add(etExpensesGroupName);
+		addExpensesEditTexts.add(etDate);
+		addExpensesEditTexts.add(etByWhom);
+		addExpensesEditTexts.add(etForWhom);
+		addExpensesEditTexts.add(etPurpose);
+		addExpensesEditTexts.add(etProductName);
+		addExpensesEditTexts.add(etAmount);
 
-        etPersonName = findViewById(R.id.etPersonName);
-        etMobileNumber = findViewById(R.id.etPersonMobile);
-        etEmailID = findViewById(R.id.etPersonEmail);
+		etExpensesGroupName = findViewById(R.id.etAddGroup);
+		addGroupEditTexts.add(etExpensesGroupName);
 
-        spinnerExpensesGroup = findViewById(R.id.spinnerExpenseGroup);
-        spinnerPersons = findViewById(R.id.spinnerPersons);
+		etPersonName = findViewById(R.id.etPersonName);
+		etMobileNumber = findViewById(R.id.etPersonMobile);
+		etEmailID = findViewById(R.id.etPersonEmail);
 
-        addPersonEditTexts.add(etPersonName);
-        addPersonEditTexts.add(etMobileNumber);
-        addPersonEditTexts.add(etEmailID);
+		spinnerExpensesGroup = findViewById(R.id.spinnerExpenseGroup);
+		spinnerExpensesGroups = findViewById(R.id.spinnerExpenseGroups);
 
-        Log.d(TAG, "[onCreate] EditText initialization is done");
+		addPersonEditTexts.add(etPersonName);
+		addPersonEditTexts.add(etMobileNumber);
+		addPersonEditTexts.add(etEmailID);
 
-        etDate.setOnFocusChangeListener(this);
-        etByWhom.setOnFocusChangeListener(this);
-        etForWhom.setOnFocusChangeListener(this);
-        etPurpose.setOnFocusChangeListener(this);
-        etProductName.setOnFocusChangeListener(this);
-        etAmount.setOnFocusChangeListener(this);
+		Log.d(TAG, "[onCreate] EditText initialization is done");
 
-        etExpensesGroupName.setOnFocusChangeListener(this);
-        etPersonName.setOnFocusChangeListener(this);
-        etMobileNumber.setOnFocusChangeListener(this);
-        etEmailID.setOnFocusChangeListener(this);
+		etDate.setOnFocusChangeListener(this);
+		etByWhom.setOnFocusChangeListener(this);
+		etForWhom.setOnFocusChangeListener(this);
+		etPurpose.setOnFocusChangeListener(this);
+		etProductName.setOnFocusChangeListener(this);
+		etAmount.setOnFocusChangeListener(this);
 
-        etDate.setOnKeyListener(this);
-        etByWhom.setOnKeyListener(this);
-        etForWhom.setOnKeyListener(this);
-        etPurpose.setOnKeyListener(this);
-        etProductName.setOnKeyListener(this);
-        etAmount.setOnKeyListener(this);
+		etExpensesGroupName.setOnFocusChangeListener(this);
+		etPersonName.setOnFocusChangeListener(this);
+		etMobileNumber.setOnFocusChangeListener(this);
+		etEmailID.setOnFocusChangeListener(this);
 
-        etExpensesGroupName.setOnKeyListener(this);
-        etPersonName.setOnKeyListener(this);
-        etMobileNumber.setOnKeyListener(this);
-        etEmailID.setOnKeyListener(this);
-        Log.d(TAG, "[onCreate] OnFocusChangeListener on EditText is done");
+		etDate.setOnKeyListener(this);
+		etByWhom.setOnKeyListener(this);
+		etForWhom.setOnKeyListener(this);
+		etPurpose.setOnKeyListener(this);
+		etProductName.setOnKeyListener(this);
+		etAmount.setOnKeyListener(this);
 
-        btnCreateNewGroup.setOnClickListener(this);
-        btnUpdateExistingGroup.setOnClickListener(this);
-        btnAddExpenses.setOnClickListener(this);
+		etExpensesGroupName.setOnKeyListener(this);
+		etPersonName.setOnKeyListener(this);
+		etMobileNumber.setOnKeyListener(this);
+		etEmailID.setOnKeyListener(this);
+		Log.d(TAG, "[onCreate] OnFocusChangeListener on EditText is done");
 
-        btnSave.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
+		btnCreateNewGroup.setOnClickListener(this);
+		btnUpdateExistingGroup.setOnClickListener(this);
+		btnAddExpenses.setOnClickListener(this);
 
-        btnAddGroup.setOnClickListener(this);
-        btnAddPerson.setOnClickListener(this);
-        btnPersonGroupCancel.setOnClickListener(this);
-        Log.d(TAG, "[onCreate] setOnclickListener on buttons is done");
+		btnSave.setOnClickListener(this);
+		btnCancel.setOnClickListener(this);
 
-        //default settings
-        hideCreateExpensesViews();
+		btnAddGroup.setOnClickListener(this);
+		btnAddPerson.setOnClickListener(this);
+		btnPersonGroupCancel.setOnClickListener(this);
+		Log.d(TAG, "[onCreate] setOnclickListener on buttons is done");
 
-        Log.d(TAG, "[onCreate] Everything is fine");
-    }
+		//default settings
+		hideCreateExpensesViews();
 
-    @Override
-    public void onClick(View view) {
-        Intent intent = null;
+		Log.d(TAG, "[onCreate] Everything is fine");
+	}
 
-        switch (view.getId()) {
-            case R.id.btnCreateNewGroup:
-                createNewExpenseGroupLayout.setVisibility(View.VISIBLE);
-                addExpensesLayout.setVisibility(View.GONE);
-                addExpensesFirstViewLayout.setVisibility(View.GONE);
+	@Override
+	public void onClick(View view) {
+		Intent intent = null;
 
-                Toast.makeText(this, "Creating New Group", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "[onClick(] btnCreateNewGroup is fine");
-                break;
-            case R.id.btnUpdateExistingGroup:
+		switch (view.getId()) {
+			case R.id.btnCreateNewGroup:
+				createNewExpenseGroupLayout.setVisibility(View.VISIBLE);
+				addExpensesLayout.setVisibility(View.GONE);
+				addExpensesFirstViewLayout.setVisibility(View.GONE);
 
-                Toast.makeText(this, "Updating Existing Group", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "[onClick(] btnUpdateExistingGroup is fine");
-                break;
+				Toast.makeText(this, "Creating New Group", Toast.LENGTH_LONG).show();
+				Log.d(TAG, "[onClick(] btnCreateNewGroup is fine");
+				break;
+			case R.id.btnUpdateExistingGroup:
 
-            case R.id.btnAddExpenses:
-                createNewExpenseGroupLayout.setVisibility(View.GONE);
-                addExpensesLayout.setVisibility(View.VISIBLE);
-                addExpensesFirstViewLayout.setVisibility(View.GONE);
+				Toast.makeText(this, "Updating Existing Group", Toast.LENGTH_LONG).show();
+				Log.d(TAG, "[onClick(] btnUpdateExistingGroup is fine");
+				break;
 
-                Toast.makeText(this, "Add Expenses Page", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "[onClick(] btnAddExpenses is fine");
-                break;
+			case R.id.btnAddExpenses:
+				createNewExpenseGroupLayout.setVisibility(View.GONE);
+				addExpensesLayout.setVisibility(View.VISIBLE);
+				addExpensesFirstViewLayout.setVisibility(View.GONE);
+				addOrUpdateExpenseGroup(spinnerExpensesGroups);
 
-            case R.id.btnSave:
-                if(validateRequiredFields(addExpensesEditTexts)) {
-                    Toast.makeText(this, "Expense Saved Successfully", Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "[onClick(] btnSave is fine");
-                }
-                else {
-                    Log.d(TAG, "[onClick(] btnSave will not work as required field not provided");
-                }
-                break;
-            case R.id.btnCancel:
-                createNewExpenseGroupLayout.setVisibility(View.GONE);
-                addExpensesLayout.setVisibility(View.GONE);
-                addExpensesFirstViewLayout.setVisibility(View.VISIBLE);
+				Toast.makeText(this, "Add Expenses Page", Toast.LENGTH_LONG).show();
+				Log.d(TAG, "[onClick(] btnAddExpenses is fine");
+				break;
 
-                Toast.makeText(this, "Cancelled, moving back to previous page", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "[onClick(] btnCancel is fine");
-                break;
-            case R.id.btnAddExpensesGroup:
-                if(validateRequiredFields(addGroupEditTexts)) {
-                    expenseGroups.add( etExpensesGroupName.getText().toString());
+			case R.id.btnSave:
+				if(!spinnerExpensesGroups.getSelectedItem().toString().isEmpty() && validateRequiredFields(addExpensesEditTexts)) {
 
-                    Toast.makeText(this, "Expense Group ["+ etExpensesGroupName.getText().toString() +"] Saved Successfully", Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "[onClick(] btnAddExpensesGroup is fine");
-                }
-                else {
-                    Log.d(TAG, "[onClick(] btnAddExpensesGroup will not work as required field not provided");
-                }
-                break;
-            case R.id.btnAddPerson:
-                if(spinnerExpensesGroup.getSelectedItemPosition() > 0 && validateRequiredFields(addPersonEditTexts)) {
-                    Toast.makeText(this, "Details Of ["+ etPersonName.getText().toString() +"] Saved Successfully", Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "[onClick(] btnAddPerson is fine");
-                }
-                else {
-                    Log.d(TAG, "[onClick(] btnAddPerson will not work as required field not provided");
-                }
-                break;
-            case R.id.btnCancelPerson:
-                createNewExpenseGroupLayout.setVisibility(View.GONE);
-                addExpensesLayout.setVisibility(View.GONE);
-                addExpensesFirstViewLayout.setVisibility(View.VISIBLE);
+					Toast.makeText(this, "Expense Saved Successfully", Toast.LENGTH_LONG).show();
+					Log.d(TAG, "[onClick(] btnSave is fine");
+				}
+				else {
+					Log.d(TAG, "[onClick(] btnSave will not work as required field not provided");
+				}
+				break;
+			case R.id.btnCancel:
+				createNewExpenseGroupLayout.setVisibility(View.GONE);
+				addExpensesLayout.setVisibility(View.GONE);
+				addExpensesFirstViewLayout.setVisibility(View.VISIBLE);
 
-                Toast.makeText(this, "Cancelled, moving back to previous page", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "[onClick(] btnCancelPerson is fine");
-                break;
-            default:
+				Toast.makeText(this, "Cancelled, moving back to previous page", Toast.LENGTH_LONG).show();
+				Log.d(TAG, "[onClick(] btnCancel is fine");
+				break;
+			case R.id.btnAddExpensesGroup:
+				if(validateRequiredFields(addGroupEditTexts)) {
+					expenseGroups.add( etExpensesGroupName.getText().toString());
+					addOrUpdateExpenseGroup(spinnerExpensesGroup);
 
-                Toast.makeText(this, "Not Implemented", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "[onClick(] Button i.e. " + ((Button)view).getText().toString() + " is not implemented ");
-                break;
-        }
-    }
+					Toast.makeText(this, "Expense Group ["+ etExpensesGroupName.getText().toString() +"] Saved Successfully", Toast.LENGTH_LONG).show();
+					Log.d(TAG, "[onClick(] btnAddExpensesGroup is fine");
+				}
+				else {
+					Log.d(TAG, "[onClick(] btnAddExpensesGroup will not work as required field not provided");
+				}
+				break;
+			case R.id.btnAddPerson:
+				if(!spinnerExpensesGroup.getSelectedItem().toString().isEmpty() && validateRequiredFields(addPersonEditTexts)) {
+					PersonModel person = new PersonModel();
+					person.Name = etPersonName.getText().toString();
+					person.MobileNumber = etMobileNumber.getText().toString();
+					person.Email = etEmailID.getText().toString();
+					person.GroupName = spinnerExpensesGroup.getSelectedItem().toString();
+					persons.add(person);
 
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        validateExpensesViews((EditText) v);
-        Log.d(TAG, "[onFocusChange] is fine");
-    }
+					Toast.makeText(this, "Details Of ["+ person.Name + " " + person.GroupName +"] Saved Successfully", Toast.LENGTH_LONG).show();
+					Log.d(TAG, "[onClick(] btnAddPerson is fine");
+				}
+				else {
+					Log.d(TAG, "[onClick(] btnAddPerson will not work as required field not provided");
+				}
+				break;
+			case R.id.btnCancelPerson:
+				createNewExpenseGroupLayout.setVisibility(View.GONE);
+				addExpensesLayout.setVisibility(View.GONE);
+				addExpensesFirstViewLayout.setVisibility(View.VISIBLE);
 
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        Log.d(TAG, "[onKey] is fired. Events: " + event);
+				Toast.makeText(this, "Cancelled, moving back to previous page", Toast.LENGTH_LONG).show();
+				Log.d(TAG, "[onClick(] btnCancelPerson is fine");
+				break;
+			default:
 
-        if(event.getAction() == KeyEvent.ACTION_UP) {
-            validateExpensesViews((EditText) v);
-            Log.d(TAG, "[onKey] is fired. [KeyEvent.ACTION_UP]");
-            return true;
-        }
+				Toast.makeText(this, "Not Implemented", Toast.LENGTH_LONG).show();
+				Log.d(TAG, "[onClick(] Button i.e. " + ((Button)view).getText().toString() + " is not implemented ");
+				break;
+		}
+	}
 
-        return false;
-    }
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		validateExpensesViews((EditText) v);
+		Log.d(TAG, "[onFocusChange] is fine");
+	}
 
-    private void hideCreateExpensesViews() {
-        addExpensesLayout.setVisibility(View.GONE);
-        createNewExpenseGroupLayout.setVisibility(View.GONE);
+	@Override
+	public boolean onKey(View v, int keyCode, KeyEvent event) {
+		Log.d(TAG, "[onKey] is fired. Events: " + event);
 
-        /*etDate.setVisibility(View.GONE);
-        etByWhom.setVisibility(View.GONE);
-        etForWhom.setVisibility(View.GONE);
-        etPurpose.setVisibility(View.GONE);
-        etProductName.setVisibility(View.GONE);
-        etAmount.setVisibility(View.GONE);
+		if(event.getAction() == KeyEvent.ACTION_UP) {
+			validateExpensesViews((EditText) v);
+			Log.d(TAG, "[onKey] is fired. [KeyEvent.ACTION_UP]");
+			return true;
+		}
 
-        btnSave.setVisibility(View.GONE);
-        btnCancel.setVisibility(View.GONE);
-        Log.d(TAG, "[hideCreateExpensesViews] is fine");*/
-    }
+		return false;
+	}
 
-    private void showCreateExpensesViews() {
-        /*etDate.setVisibility(View.VISIBLE);
-        etByWhom.setVisibility(View.VISIBLE);
-        etForWhom.setVisibility(View.VISIBLE);
-        etPurpose.setVisibility(View.VISIBLE);
-        etProductName.setVisibility(View.VISIBLE);
-        etAmount.setVisibility(View.VISIBLE);
+	private void hideCreateExpensesViews() {
+		addExpensesLayout.setVisibility(View.GONE);
+		createNewExpenseGroupLayout.setVisibility(View.GONE);
 
-        btnSave.setVisibility(View.VISIBLE);
-        btnCancel.setVisibility(View.VISIBLE);*/
+		/*etDate.setVisibility(View.GONE);
+		etByWhom.setVisibility(View.GONE);
+		etForWhom.setVisibility(View.GONE);
+		etPurpose.setVisibility(View.GONE);
+		etProductName.setVisibility(View.GONE);
+		etAmount.setVisibility(View.GONE);
 
-        Log.d(TAG, "[showCreateExpensesViews] is fine");
-    }
+		btnSave.setVisibility(View.GONE);
+		btnCancel.setVisibility(View.GONE);
+		Log.d(TAG, "[hideCreateExpensesViews] is fine");*/
+	}
 
-    private boolean validateRequiredFields(List<EditText> editTexts) {
-        Log.d(TAG, "[validateRequiredField] before validation");
+	private void showCreateExpensesViews() {
+		/*etDate.setVisibility(View.VISIBLE);
+		etByWhom.setVisibility(View.VISIBLE);
+		etForWhom.setVisibility(View.VISIBLE);
+		etPurpose.setVisibility(View.VISIBLE);
+		etProductName.setVisibility(View.VISIBLE);
+		etAmount.setVisibility(View.VISIBLE);
 
-        for(EditText editText : editTexts) {
-            if(!validateExpensesViews(editText)) {
-                Log.d(TAG, "[validateRequiredField] after validation, isValid: false");
-                return false;
-            }
-        }
+		btnSave.setVisibility(View.VISIBLE);
+		btnCancel.setVisibility(View.VISIBLE);*/
 
-        Log.d(TAG, "[validateRequiredField] after validation, isValid: true");
-        return true;
-    }
+		Log.d(TAG, "[showCreateExpensesViews] is fine");
+	}
 
-    private boolean validateExpensesViews(EditText editText) {
-        Log.d(TAG, "[validateExpensesViews] isEmpty: " + editText.getText().toString().isEmpty());
+	private boolean validateRequiredFields(List<EditText> editTexts) {
+		Log.d(TAG, "[validateRequiredField] before validation");
 
-        if(editText.getText().toString().isEmpty()) {
-            editText.setError("Required");
-            Log.d(TAG, "[validateExpensesViews] not valid");
-            return false;
-        }
-        else {
-            Log.d(TAG, "[validateExpensesViews] valid");
-            return  true;
-        }
-    }
+		for(EditText editText : editTexts) {
+			if(!validateExpensesViews(editText)) {
+				Log.d(TAG, "[validateRequiredField] after validation, isValid: false");
+				return false;
+			}
+		}
+
+		Log.d(TAG, "[validateRequiredField] after validation, isValid: true");
+		return true;
+	}
+
+	private boolean validateExpensesViews(EditText editText) {
+		Log.d(TAG, "[validateExpensesViews] isEmpty: " + editText.getText().toString().isEmpty());
+
+		if(editText.getText().toString().isEmpty()) {
+			editText.setError("Required");
+			Log.d(TAG, "[validateExpensesViews] not valid");
+			return false;
+		}
+		else {
+			Log.d(TAG, "[validateExpensesViews] valid");
+			return  true;
+		}
+	}
+
+	private void addOrUpdateExpenseGroup(Spinner spinner) {
+		ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, expenseGroups);
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(spinnerAdapter);
+
+		//spinnerAdapter.add("DELHI");
+		//spinnerAdapter.notifyDataSetChanged();
+	}
+
 }
