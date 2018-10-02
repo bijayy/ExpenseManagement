@@ -9,19 +9,15 @@ public class ExpensesGroupSqliteDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = PersonSqliteDatabaseHelper.class.getSimpleName();
 
-    static final String TABLE_NAME = "Person";
-    static final String NAME = "Name";
-    static final String PHONE_NUMBER = "PhoneNumber";
-    static final String EMAIL = "Email";
+    static final String TABLE_NAME = "ExpensesGroup";
     static final String GROUP_NAME = "GroupName";
     static final String ID = "_id";
 
-    private static final String DATABASE_NAME = "Person.db";
+    private static final String DATABASE_NAME = "ExpenseGroup.db";
     private static final int DATABASE_VERSION = 1;
 
     private String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
-            ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " VARCHAR(50), " + PHONE_NUMBER + " VARCHAR(15), " +
-            EMAIL + " VARCHAR(50), " + GROUP_NAME + " VARCHAR(50));";
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + GROUP_NAME + " VARCHAR(50));";
     private String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     ExpensesGroupSqliteDatabaseHelper(Context context) {

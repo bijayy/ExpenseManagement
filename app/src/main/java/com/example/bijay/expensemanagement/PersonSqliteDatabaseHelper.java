@@ -13,15 +13,16 @@ public class PersonSqliteDatabaseHelper extends SQLiteOpenHelper {
     static final String NAME = "Name";
     static final String PHONE_NUMBER = "PhoneNumber";
     static final String EMAIL = "Email";
-    static final String GROUP_NAME = "GroupName";
+    static final String GROUP_ID = "GroupId";
     static final String ID = "_id";
 
     private static final String DATABASE_NAME = "Person.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " VARCHAR(50), " + PHONE_NUMBER + " VARCHAR(15), " +
-            EMAIL + " VARCHAR(50), " + GROUP_NAME + " VARCHAR(50));";
+            EMAIL + " VARCHAR(50), " + GROUP_ID + " INTEGER, FOREIGN KEY("+ GROUP_ID +") REFERENCES " +
+            ExpensesGroupSqliteDatabaseHelper.TABLE_NAME + "("+ ExpensesGroupSqliteDatabaseHelper.ID+"));";
     private String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     PersonSqliteDatabaseHelper(Context context) {
