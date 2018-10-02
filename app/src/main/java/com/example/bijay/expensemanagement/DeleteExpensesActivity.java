@@ -6,7 +6,7 @@ import android.util.Log;
 
 public class DeleteExpensesActivity extends AppCompatActivity {
 
-    private static final String TAG = "[DeleteExpensesAct]";
+    private static final String TAG = DeleteExpensesActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

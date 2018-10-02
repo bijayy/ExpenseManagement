@@ -19,7 +19,7 @@ import java.util.List;
 
 public class AddExpensesActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
-	private static final String TAG = "[AddExpensesActivity]";
+	private static final String TAG = AddExpensesActivity.class.getSimpleName();
 	private boolean isValid = false;
 
 	private Button btnCreateNewGroup;
@@ -222,8 +222,8 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 					person.GroupName = spinnerExpensesGroup.getSelectedItem().toString();
 					persons.add(person);
 
-					SqliteDatabaseAdapter sqliteDatabaseAdapter = new SqliteDatabaseAdapter(this);
-					sqliteDatabaseAdapter.addPerson(person);
+					PersonSqliteDatabaseAdapter personSqliteDatabaseAdapter = new PersonSqliteDatabaseAdapter(this);
+					personSqliteDatabaseAdapter.addPerson(person);
 
 					Toast.makeText(this, "Details Of ["+ person.Name + " " + person.GroupName +"] Saved Successfully", Toast.LENGTH_LONG).show();
 					Log.d(TAG, "[onClick(] btnAddPerson is fine");

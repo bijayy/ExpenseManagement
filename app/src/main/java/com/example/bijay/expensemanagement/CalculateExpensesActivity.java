@@ -6,7 +6,7 @@ import android.util.Log;
 
 public class CalculateExpensesActivity extends AppCompatActivity {
 
-    private static final String TAG = "[CalculateExpensesAct]";
+    private static final String TAG = CalculateExpensesActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

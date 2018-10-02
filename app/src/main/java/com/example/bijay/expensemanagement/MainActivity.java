@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "[MainActivity]";
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     private Button btnPrepareExpensesList;
     private Button btnAddExpenses;
     private Button btnCalculateExpenses;

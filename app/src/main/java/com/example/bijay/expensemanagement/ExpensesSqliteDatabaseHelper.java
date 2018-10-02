@@ -5,9 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class SqliteDatabaseHelper extends SQLiteOpenHelper {
+public class ExpensesSqliteDatabaseHelper  extends SQLiteOpenHelper {
 
-    private static final String TAG = SqliteDatabaseHelper.class.getSimpleName();
+    private static final String TAG = PersonSqliteDatabaseHelper.class.getSimpleName();
 
     static final String TABLE_NAME = "Person";
     static final String NAME = "Name";
@@ -24,7 +24,7 @@ public class SqliteDatabaseHelper extends SQLiteOpenHelper {
             EMAIL + " VARCHAR(50), " + GROUP_NAME + " VARCHAR(50));";
     private String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-    SqliteDatabaseHelper(Context context) {
+    ExpensesSqliteDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
         Log.d(TAG, "Constructor running in thread: " + Thread.currentThread().getName());

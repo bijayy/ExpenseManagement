@@ -6,7 +6,7 @@ import android.util.Log;
 
 public class PrepareListActivity extends AppCompatActivity {
 
-    private static final String TAG = "[PrepareListActivity]";
+    private static final String TAG = PrepareListActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
