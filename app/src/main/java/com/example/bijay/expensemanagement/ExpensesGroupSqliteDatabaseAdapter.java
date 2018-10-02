@@ -19,132 +19,108 @@ public class ExpensesGroupSqliteDatabaseAdapter {
     }
 
     /**
-     * Insert data of PersonModel in sqlite.
-     * @param person
+     * Insert data of ExpensesGroupModel in sqlite.
+     * @param expensesGroupModel
      */
-    public long addPerson(PersonModel person) {
-        if (person != null) {
+    public long addExpensesGroup(ExpensesGroupModel expensesGroupModel) {
+        if (expensesGroupModel != null) {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(expensesGroupSqliteDatabaseHelper.NAME, person.Name);
-            contentValues.put(expensesGroupSqliteDatabaseHelper.PHONE_NUMBER, person.MobileNumber);
-            contentValues.put(expensesGroupSqliteDatabaseHelper.EMAIL, person.Email);
-            contentValues.put(expensesGroupSqliteDatabaseHelper.GROUP_NAME, person.GroupName);
+            contentValues.put(expensesGroupSqliteDatabaseHelper.GROUP_NAME, expensesGroupModel.GroupName);
 
-            Log.d(TAG, "addPerson() successfully added person details running in thread: " + Thread.currentThread().getName());
+            Log.d(TAG, "addExpensesGroup() successfully added expenses group details running in thread: " + Thread.currentThread().getName());
             return expensesGroupSqliteDatabaseHelper.getWritableDatabase().insert(expensesGroupSqliteDatabaseHelper.TABLE_NAME, null, contentValues);
         }
 
-        Log.d(TAG, "addPerson() blank person details cannot be added running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "addExpensesGroup() blank expenses group details cannot be added running in thread: " + Thread.currentThread().getName());
         return 0;
     }
 
     /**
-     * Update data of PersonModel in sqlite.
-     * @param id
-     * @param name
-     * @param phoneNumber
-     * @param emailId
-     * @param groupName
+     * Update data of ExpensesGroupModel in sqlite.
+     * @param expensesGroupModel
      */
-    public int updatePersonById(String id, String name, String phoneNumber, String emailId, String groupName) {
+    public int updateExpensesGroupById(ExpensesGroupModel expensesGroupModel) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(expensesGroupSqliteDatabaseHelper.NAME, name);
-        contentValues.put(expensesGroupSqliteDatabaseHelper.PHONE_NUMBER, phoneNumber);
-        contentValues.put(expensesGroupSqliteDatabaseHelper.EMAIL, emailId);
-        contentValues.put(expensesGroupSqliteDatabaseHelper.GROUP_NAME, groupName);
+        contentValues.put(expensesGroupSqliteDatabaseHelper.GROUP_NAME, expensesGroupModel.GroupName);
 
-        String[] whereArgs = {id};
+        String[] whereArgs = {expensesGroupModel.ID + ""};
         int totalRowUpdated = expensesGroupSqliteDatabaseHelper.getWritableDatabase().update(expensesGroupSqliteDatabaseHelper.TABLE_NAME,  contentValues, expensesGroupSqliteDatabaseHelper.ID +"=?", whereArgs);
 
         if(totalRowUpdated < 1)
-            Log.d(TAG, "updatePersonById() unot found person id: "+ id +"  running in thread: " + Thread.currentThread().getName());
+            Log.d(TAG, "updateExpensesGroupById() not found expenses group id: "+ expensesGroupModel.ID +"  running in thread: " + Thread.currentThread().getName());
 
-        Log.d(TAG, "updatePersonById() updated person id "+ id +" running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "updateExpensesGroupById() updated expenses group id "+ expensesGroupModel.ID +" running in thread: " + Thread.currentThread().getName());
         return totalRowUpdated;
     }
 
     /**
-     * Delete PersonModel by id.
+     * Delete ExpensesGroupModel by id.
      * @param id
      */
-    public int deletePersonById(String id) {
+    public int deleteExpensesGroupById(String id) {
         String[] whereArgs = {id};
         int totalRowDeleted = expensesGroupSqliteDatabaseHelper.getWritableDatabase().delete(expensesGroupSqliteDatabaseHelper.TABLE_NAME, expensesGroupSqliteDatabaseHelper.ID +"=?", whereArgs);
 
         if(totalRowDeleted < 1)
-            Log.d(TAG, "deletePersonById() not found person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+            Log.d(TAG, "deleteExpensesGroupById() not found expense group id: "+ id +" running in thread: " + Thread.currentThread().getName());
 
-        Log.d(TAG, "deletePersonById() deleted person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "deleteExpensesGroupById() deleted expense group id: "+ id +" running in thread: " + Thread.currentThread().getName());
         return totalRowDeleted;
     }
 
     /**
-     * Select PersonModel select all.
+     * Select ExpensesGroupModel select all.
      */
-    public List<PersonModel> getPersons() {
+    public List<ExpensesGroupModel> getExpensesGroups() {
 
-        List<PersonModel> personModelList = new ArrayList<>();
+        List<ExpensesGroupModel> expensesGroupModels = new ArrayList<>();
         Cursor cursor = null;
-        String[] colums = { expensesGroupSqliteDatabaseHelper.ID, expensesGroupSqliteDatabaseHelper.NAME, expensesGroupSqliteDatabaseHelper.PHONE_NUMBER,
-                expensesGroupSqliteDatabaseHelper.EMAIL, expensesGroupSqliteDatabaseHelper.GROUP_NAME};
+        String[] colums = { expensesGroupSqliteDatabaseHelper.ID, expensesGroupSqliteDatabaseHelper.GROUP_NAME};
 
         cursor = expensesGroupSqliteDatabaseHelper.getWritableDatabase().query(expensesGroupSqliteDatabaseHelper.TABLE_NAME, colums, null, null, null, null, null);
 
         while(cursor.moveToNext()) {
-            PersonModel personModel = new PersonModel();
+            ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
             int idIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.ID);
-            int nameIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.NAME);
-            int phoneNumberIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.PHONE_NUMBER);
-            int emailIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.EMAIL);
             int groupNameIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.GROUP_NAME);
 
-            personModel.ID = cursor.getString(idIndex);
-            personModel.Name = cursor.getString(nameIndex);
-            personModel.MobileNumber = cursor.getString(phoneNumberIndex);
-            personModel.Email = cursor.getString(emailIndex);
-            personModel.GroupName = cursor.getString(groupNameIndex);
+            expensesGroupModel.ID = cursor.getInt(idIndex);
+            expensesGroupModel.GroupName = cursor.getString(groupNameIndex);
 
-            personModelList.add(personModel);
+            expensesGroupModels.add(expensesGroupModel);
         }
 
-        if(personModelList.isEmpty())
-            Log.d(TAG, "getPersons() found no records running in thread: " + Thread.currentThread().getName());
+        if(expensesGroupModels.isEmpty())
+            Log.d(TAG, "getExpensesGroups() found no records running in thread: " + Thread.currentThread().getName());
 
-        Log.d(TAG, "getPersons() found records running in thread: " + Thread.currentThread().getName());
-        return personModelList;
+        Log.d(TAG, "getExpensesGroups() found records running in thread: " + Thread.currentThread().getName());
+        return expensesGroupModels;
     }
 
     /**
-     * Select PersonModel by id.
+     * Select ExpensesGroupModel by id.
      * @param id
      */
-    public PersonModel getPersonById(String id) {
+    public ExpensesGroupModel getExpensesGroupById(String id) {
         Cursor cursor = null;
-        String[] colums = { expensesGroupSqliteDatabaseHelper.ID, expensesGroupSqliteDatabaseHelper.NAME, expensesGroupSqliteDatabaseHelper.PHONE_NUMBER,
-                expensesGroupSqliteDatabaseHelper.EMAIL, expensesGroupSqliteDatabaseHelper.GROUP_NAME};
+        String[] colums = { expensesGroupSqliteDatabaseHelper.ID, expensesGroupSqliteDatabaseHelper.GROUP_NAME};
         String[]  selectionArgs = {id};
 
         cursor = expensesGroupSqliteDatabaseHelper.getWritableDatabase().query(expensesGroupSqliteDatabaseHelper.TABLE_NAME, colums, expensesGroupSqliteDatabaseHelper.ID +"=?", selectionArgs, null, null, null);
 
         if(cursor.moveToNext()) {
-            PersonModel personModel = new PersonModel();
+            ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
             int idIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.ID);
-            int nameIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.NAME);
-            int phoneNumberIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.PHONE_NUMBER);
-            int emailIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.EMAIL);
             int groupNameIndex = cursor.getColumnIndex(expensesGroupSqliteDatabaseHelper.GROUP_NAME);
 
-            personModel.ID = cursor.getString(idIndex);
-            personModel.Name = cursor.getString(nameIndex);
-            personModel.MobileNumber = cursor.getString(phoneNumberIndex);
-            personModel.Email = cursor.getString(emailIndex);
-            personModel.GroupName = cursor.getString(groupNameIndex);
+            expensesGroupModel.ID = cursor.getInt(idIndex);
+            expensesGroupModel.GroupName = cursor.getString(groupNameIndex);
 
-            Log.d(TAG, "getPersonById() found record of person id: "+ id +" running in thread: " + Thread.currentThread().getName());
-            return personModel;
+            Log.d(TAG, "getExpensesGroupById() found record of expense group id: "+ id +" running in thread: " + Thread.currentThread().getName());
+            return expensesGroupModel;
         }
 
-        Log.d(TAG, "getPersonById() no record running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "getExpensesGroupById() no record running in thread: " + Thread.currentThread().getName());
         return null;
     }
 }

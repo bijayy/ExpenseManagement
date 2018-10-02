@@ -13,6 +13,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spinnerPersons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="spinnerExpenseGroups"
+        app:layout_constraintStart_toStartOf="spinnerExpenseGroups"
+        app:layout_constraintTop_toTopOf="spinnerExpenseGroups" />
+
     <EditText
         android:id="@+id/etDate"
         android:layout_width="wrap_content"
@@ -21,9 +30,9 @@
         android:ems="10"
         android:hint="Date"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/spinnerExpenseGroups"
-        app:layout_constraintStart_toStartOf="@+id/spinnerExpenseGroups"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerExpenseGroups" />
+        app:layout_constraintEnd_toEndOf="@+id/spinnerPersons"
+        app:layout_constraintStart_toStartOf="@+id/spinnerPersons"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerPersons" />
 
     <EditText
         android:id="@+id/etPurpose"

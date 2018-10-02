@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +48,7 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 
 	private Spinner spinnerExpensesGroup;
 	private Spinner spinnerExpensesGroups;
+	private Spinner spinnerPersons;
 
 	private ConstraintLayout addExpensesLayout;
 	private LinearLayout createNewExpenseGroupLayout;
@@ -56,7 +58,7 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 	private List<EditText> addGroupEditTexts = new ArrayList<EditText>();
 	private List<EditText> addPersonEditTexts = new ArrayList<EditText>();
 
-	private List<String> expenseGroups = new ArrayList<String>();
+	private List<ExpensesGroupModel> expenseGroups = new ArrayList<>();
 
 	private List<PersonModel> persons = new ArrayList<>();
 
@@ -104,6 +106,7 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 
 		spinnerExpensesGroup = findViewById(R.id.spinnerExpenseGroup);
 		spinnerExpensesGroups = findViewById(R.id.spinnerExpenseGroups);
+		spinnerPersons = findViewById(R.id.spinnerPersons);
 
 		addPersonEditTexts.add(etPersonName);
 		addPersonEditTexts.add(etMobileNumber);
@@ -134,6 +137,34 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 		etPersonName.setOnKeyListener(this);
 		etMobileNumber.setOnKeyListener(this);
 		etEmailID.setOnKeyListener(this);
+
+		spinnerExpensesGroups.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				PersonSqliteDatabaseAdapter personSqliteDatabaseAdapter = new PersonSqliteDatabaseAdapter(getApplicationContext());
+				List<PersonModel> personModels = personSqliteDatabaseAdapter.getPersons();
+
+				int expensesGroupID = 0;
+				for(ExpensesGroupModel expenseGroup : expenseGroups) {
+					if(expenseGroup.GroupName.equals(spinnerExpensesGroups.getSelectedItem().toString()))
+					{
+						expensesGroupID = expenseGroup.ID;
+						break;
+					}
+				}
+
+				for(PersonModel person : personModels) {
+					if(person.GroupID == expensesGroupID) {
+						persons.add(person);
+					}
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+
+			}
+		});
 		Log.d(TAG, "[onCreate] OnFocusChangeListener on EditText is done");
 
 		btnCreateNewGroup.setOnClickListener(this);
@@ -177,6 +208,10 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 				createNewExpenseGroupLayout.setVisibility(View.GONE);
 				addExpensesLayout.setVisibility(View.VISIBLE);
 				addExpensesFirstViewLayout.setVisibility(View.GONE);
+
+				ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter = new ExpensesGroupSqliteDatabaseAdapter(this);
+				expenseGroups = expensesGroupSqliteDatabaseAdapter.getExpensesGroups();
+
 				addOrUpdateExpenseGroup(spinnerExpensesGroups);
 
 				Toast.makeText(this, "Add Expenses Page", Toast.LENGTH_LONG).show();
@@ -203,7 +238,12 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 				break;
 			case R.id.btnAddExpensesGroup:
 				if(validateRequiredFields(addGroupEditTexts)) {
-					expenseGroups.add( etExpensesGroupName.getText().toString());
+					ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter1 = new ExpensesGroupSqliteDatabaseAdapter(this);
+					ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
+					expensesGroupModel.GroupName = etExpensesGroupName.getText().toString();
+					expensesGroupSqliteDatabaseAdapter1.addExpensesGroup(expensesGroupModel);
+
+					expenseGroups = expensesGroupSqliteDatabaseAdapter1.getExpensesGroups();
 					addOrUpdateExpenseGroup(spinnerExpensesGroup);
 
 					Toast.makeText(this, "Expense Group ["+ etExpensesGroupName.getText().toString() +"] Saved Successfully", Toast.LENGTH_LONG).show();
@@ -219,13 +259,19 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 					person.Name = etPersonName.getText().toString();
 					person.MobileNumber = etMobileNumber.getText().toString();
 					person.Email = etEmailID.getText().toString();
-					person.GroupName = spinnerExpensesGroup.getSelectedItem().toString();
-					persons.add(person);
+
+					for(ExpensesGroupModel expenseGroup : expenseGroups) {
+						if(expenseGroup.GroupName.equals(spinnerExpensesGroup.getSelectedItem().toString()))
+						{
+							person.GroupID = expenseGroup.ID;
+							break;
+						}
+					}
 
 					PersonSqliteDatabaseAdapter personSqliteDatabaseAdapter = new PersonSqliteDatabaseAdapter(this);
 					personSqliteDatabaseAdapter.addPerson(person);
 
-					Toast.makeText(this, "Details Of ["+ person.Name + " " + person.GroupName +"] Saved Successfully", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "Details Of ["+ person.Name + " " + person.GroupID +"] Saved Successfully", Toast.LENGTH_LONG).show();
 					Log.d(TAG, "[onClick(] btnAddPerson is fine");
 				}
 				else {
@@ -326,12 +372,11 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 	}
 
 	private void addOrUpdateExpenseGroup(Spinner spinner) {
-		ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, expenseGroups);
+		ArrayAdapter<ExpensesGroupModel> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, expenseGroups);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(spinnerAdapter);
 
 		//spinnerAdapter.add("DELHI");
 		//spinnerAdapter.notifyDataSetChanged();
 	}
-
 }

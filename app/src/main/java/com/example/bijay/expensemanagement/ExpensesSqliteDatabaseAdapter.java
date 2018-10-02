@@ -19,132 +19,152 @@ public class ExpensesSqliteDatabaseAdapter {
     }
 
     /**
-     * Insert data of PersonModel in sqlite.
-     * @param person
+     * Insert data of ExpensesModel in sqlite.
+     * @param expense
      */
-    public long addPerson(PersonModel person) {
-        if (person != null) {
+    public long addExpense(ExpensesModel expense) {
+        if (expense != null) {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(expensesSqliteDatabaseHelper.NAME, person.Name);
-            contentValues.put(expensesSqliteDatabaseHelper.PHONE_NUMBER, person.MobileNumber);
-            contentValues.put(expensesSqliteDatabaseHelper.EMAIL, person.Email);
-            contentValues.put(expensesSqliteDatabaseHelper.GROUP_NAME, person.GroupName);
+            contentValues.put(expensesSqliteDatabaseHelper.DATE, expense.Date);
+            contentValues.put(expensesSqliteDatabaseHelper.BY_WHOM, expense.ByWhom);
+            contentValues.put(expensesSqliteDatabaseHelper.FOR_WHOM, expense.ForWhom);
+            contentValues.put(expensesSqliteDatabaseHelper.PURPOSE, expense.Purpose);
+            contentValues.put(expensesSqliteDatabaseHelper.PRODUCT_NAME, expense.ProductName);
+            contentValues.put(expensesSqliteDatabaseHelper.PRICE, expense.Amount);
+            contentValues.put(expensesSqliteDatabaseHelper.PERSON_ID, expense.PersonId);
 
-            Log.d(TAG, "addPerson() successfully added person details running in thread: " + Thread.currentThread().getName());
+            Log.d(TAG, "addExpense() successfully added expense details running in thread: " + Thread.currentThread().getName());
             return expensesSqliteDatabaseHelper.getWritableDatabase().insert(expensesSqliteDatabaseHelper.TABLE_NAME, null, contentValues);
         }
 
-        Log.d(TAG, "addPerson() blank person details cannot be added running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "addExpense() blank expense details cannot be added running in thread: " + Thread.currentThread().getName());
         return 0;
     }
 
     /**
-     * Update data of PersonModel in sqlite.
-     * @param id
-     * @param name
-     * @param phoneNumber
-     * @param emailId
-     * @param groupName
+     * Update data of ExpensesModel in sqlite.
+     * @param expense
      */
-    public int updatePersonById(String id, String name, String phoneNumber, String emailId, String groupName) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(expensesSqliteDatabaseHelper.NAME, name);
-        contentValues.put(expensesSqliteDatabaseHelper.PHONE_NUMBER, phoneNumber);
-        contentValues.put(expensesSqliteDatabaseHelper.EMAIL, emailId);
-        contentValues.put(expensesSqliteDatabaseHelper.GROUP_NAME, groupName);
+    public int updateExpenseById(ExpensesModel expense) {
+        if (expense != null) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(expensesSqliteDatabaseHelper.DATE, expense.Date);
+            contentValues.put(expensesSqliteDatabaseHelper.BY_WHOM, expense.ByWhom);
+            contentValues.put(expensesSqliteDatabaseHelper.FOR_WHOM, expense.ForWhom);
+            contentValues.put(expensesSqliteDatabaseHelper.PURPOSE, expense.Purpose);
+            contentValues.put(expensesSqliteDatabaseHelper.PRODUCT_NAME, expense.ProductName);
+            contentValues.put(expensesSqliteDatabaseHelper.PRICE, expense.Amount);
+            contentValues.put(expensesSqliteDatabaseHelper.PERSON_ID, expense.PersonId);
 
-        String[] whereArgs = {id};
-        int totalRowUpdated = expensesSqliteDatabaseHelper.getWritableDatabase().update(expensesSqliteDatabaseHelper.TABLE_NAME,  contentValues, expensesSqliteDatabaseHelper.ID +"=?", whereArgs);
+            String[] whereArgs = {expense.ID +""};
+            int totalRowUpdated = expensesSqliteDatabaseHelper.getWritableDatabase().update(expensesSqliteDatabaseHelper.TABLE_NAME, contentValues, expensesSqliteDatabaseHelper.ID + "=?", whereArgs);
 
-        if(totalRowUpdated < 1)
-            Log.d(TAG, "updatePersonById() unot found person id: "+ id +"  running in thread: " + Thread.currentThread().getName());
+            if (totalRowUpdated < 1)
+                Log.d(TAG, "updateExpenseById() not found expense id: " + expense.ID + "  running in thread: " + Thread.currentThread().getName());
 
-        Log.d(TAG, "updatePersonById() updated person id "+ id +" running in thread: " + Thread.currentThread().getName());
-        return totalRowUpdated;
+            Log.d(TAG, "updateExpenseById() updated expense id " + expense.ID + " running in thread: " + Thread.currentThread().getName());
+            return totalRowUpdated;
+        }
+
+        return 0;
     }
 
     /**
-     * Delete PersonModel by id.
+     * Delete ExpensesModel by id.
      * @param id
      */
-    public int deletePersonById(String id) {
+    public int deleteExpenseById(String id) {
         String[] whereArgs = {id};
         int totalRowDeleted = expensesSqliteDatabaseHelper.getWritableDatabase().delete(expensesSqliteDatabaseHelper.TABLE_NAME, expensesSqliteDatabaseHelper.ID +"=?", whereArgs);
 
         if(totalRowDeleted < 1)
-            Log.d(TAG, "deletePersonById() not found person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+            Log.d(TAG, "deleteExpenseById() not found expense id: "+ id +" running in thread: " + Thread.currentThread().getName());
 
-        Log.d(TAG, "deletePersonById() deleted person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "deleteExpenseById() deleted expense id: "+ id +" running in thread: " + Thread.currentThread().getName());
         return totalRowDeleted;
     }
 
     /**
-     * Select PersonModel select all.
+     * Select ExpensesModel select all.
      */
-    public List<PersonModel> getPersons() {
+    public List<ExpensesModel> getExpenses() {
 
-        List<PersonModel> personModelList = new ArrayList<>();
+        List<ExpensesModel> expensesModels = new ArrayList<>();
         Cursor cursor = null;
-        String[] colums = { expensesSqliteDatabaseHelper.ID, expensesSqliteDatabaseHelper.NAME, expensesSqliteDatabaseHelper.PHONE_NUMBER,
-                expensesSqliteDatabaseHelper.EMAIL, expensesSqliteDatabaseHelper.GROUP_NAME};
+        String[] colums = { expensesSqliteDatabaseHelper.ID, expensesSqliteDatabaseHelper.DATE, expensesSqliteDatabaseHelper.BY_WHOM,
+                expensesSqliteDatabaseHelper.FOR_WHOM, expensesSqliteDatabaseHelper.PURPOSE, expensesSqliteDatabaseHelper.PRODUCT_NAME,
+                expensesSqliteDatabaseHelper.PRICE, expensesSqliteDatabaseHelper.PERSON_ID};
 
         cursor = expensesSqliteDatabaseHelper.getWritableDatabase().query(expensesSqliteDatabaseHelper.TABLE_NAME, colums, null, null, null, null, null);
 
         while(cursor.moveToNext()) {
-            PersonModel personModel = new PersonModel();
+            ExpensesModel expensesModel = new ExpensesModel();
             int idIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.ID);
-            int nameIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.NAME);
-            int phoneNumberIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PHONE_NUMBER);
-            int emailIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.EMAIL);
-            int groupNameIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.GROUP_NAME);
+            int dateIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.DATE);
+            int byWhomIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.BY_WHOM);
+            int forWhomIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.FOR_WHOM);
+            int purposeIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PURPOSE);
+            int productNameIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PRODUCT_NAME);
+            int priceIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PRICE);
+            int personIdIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PERSON_ID);
 
-            personModel.ID = cursor.getString(idIndex);
-            personModel.Name = cursor.getString(nameIndex);
-            personModel.MobileNumber = cursor.getString(phoneNumberIndex);
-            personModel.Email = cursor.getString(emailIndex);
-            personModel.GroupName = cursor.getString(groupNameIndex);
+            expensesModel.ID = cursor.getInt(idIndex);
+            expensesModel.Date = cursor.getString(dateIndex);
+            expensesModel.ByWhom = cursor.getString(byWhomIndex);
+            expensesModel.ForWhom = cursor.getString(forWhomIndex);
+            expensesModel.Purpose = cursor.getString(purposeIndex);
+            expensesModel.PersonId = cursor.getInt(personIdIndex);
+            expensesModel.ProductName = cursor.getString(productNameIndex);
+            expensesModel.Amount = cursor.getString(priceIndex);
 
-            personModelList.add(personModel);
+            expensesModels.add(expensesModel);
         }
 
-        if(personModelList.isEmpty())
-            Log.d(TAG, "getPersons() found no records running in thread: " + Thread.currentThread().getName());
+        if(expensesModels.isEmpty())
+            Log.d(TAG, "getExpenses() found no records running in thread: " + Thread.currentThread().getName());
 
-        Log.d(TAG, "getPersons() found records running in thread: " + Thread.currentThread().getName());
-        return personModelList;
+        Log.d(TAG, "getExpenses() found records running in thread: " + Thread.currentThread().getName());
+        return expensesModels;
     }
 
     /**
-     * Select PersonModel by id.
+     * Select ExpensesModel by id.
      * @param id
      */
-    public PersonModel getPersonById(String id) {
+    public ExpensesModel getExpenseById(String id) {
         Cursor cursor = null;
-        String[] colums = { expensesSqliteDatabaseHelper.ID, expensesSqliteDatabaseHelper.NAME, expensesSqliteDatabaseHelper.PHONE_NUMBER,
-                expensesSqliteDatabaseHelper.EMAIL, expensesSqliteDatabaseHelper.GROUP_NAME};
+        String[] colums = { expensesSqliteDatabaseHelper.ID, expensesSqliteDatabaseHelper.DATE, expensesSqliteDatabaseHelper.BY_WHOM,
+                expensesSqliteDatabaseHelper.FOR_WHOM, expensesSqliteDatabaseHelper.PURPOSE, expensesSqliteDatabaseHelper.PRODUCT_NAME,
+                expensesSqliteDatabaseHelper.PRICE, expensesSqliteDatabaseHelper.PERSON_ID};
         String[]  selectionArgs = {id};
 
         cursor = expensesSqliteDatabaseHelper.getWritableDatabase().query(expensesSqliteDatabaseHelper.TABLE_NAME, colums, expensesSqliteDatabaseHelper.ID +"=?", selectionArgs, null, null, null);
 
         if(cursor.moveToNext()) {
-            PersonModel personModel = new PersonModel();
+            ExpensesModel expensesModel = new ExpensesModel();
             int idIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.ID);
-            int nameIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.NAME);
-            int phoneNumberIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PHONE_NUMBER);
-            int emailIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.EMAIL);
-            int groupNameIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.GROUP_NAME);
+            int dateIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.DATE);
+            int byWhomIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.BY_WHOM);
+            int forWhomIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.FOR_WHOM);
+            int purposeIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PURPOSE);
+            int productNameIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PRODUCT_NAME);
+            int priceIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PRICE);
+            int personIdIndex = cursor.getColumnIndex(expensesSqliteDatabaseHelper.PERSON_ID);
 
-            personModel.ID = cursor.getString(idIndex);
-            personModel.Name = cursor.getString(nameIndex);
-            personModel.MobileNumber = cursor.getString(phoneNumberIndex);
-            personModel.Email = cursor.getString(emailIndex);
-            personModel.GroupName = cursor.getString(groupNameIndex);
+            expensesModel.ID = cursor.getInt(idIndex);
+            expensesModel.Date = cursor.getString(dateIndex);
+            expensesModel.ByWhom = cursor.getString(byWhomIndex);
+            expensesModel.ForWhom = cursor.getString(forWhomIndex);
+            expensesModel.Purpose = cursor.getString(purposeIndex);
+            expensesModel.PersonId = cursor.getInt(personIdIndex);
+            expensesModel.ProductName = cursor.getString(productNameIndex);
+            expensesModel.Amount = cursor.getString(priceIndex);
 
-            Log.d(TAG, "getPersonById() found record of person id: "+ id +" running in thread: " + Thread.currentThread().getName());
-            return personModel;
+            Log.d(TAG, "getExpenseById() found record of expense id: "+ id +" running in thread: " + Thread.currentThread().getName());
+            return expensesModel;
         }
 
-        Log.d(TAG, "getPersonById() no record running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "getExpenseById() no record running in thread: " + Thread.currentThread().getName());
         return null;
     }
 }

@@ -29,7 +29,7 @@ public class PersonSqliteDatabaseAdapter {
             contentValues.put(personSqliteDatabaseHelper.NAME, person.Name);
             contentValues.put(personSqliteDatabaseHelper.PHONE_NUMBER, person.MobileNumber);
             contentValues.put(personSqliteDatabaseHelper.EMAIL, person.Email);
-            contentValues.put(personSqliteDatabaseHelper.GROUP_NAME, person.GroupName);
+            contentValues.put(personSqliteDatabaseHelper.GROUP_ID, person.GroupName);
 
             Log.d(TAG, "addPerson() successfully added person details running in thread: " + Thread.currentThread().getName());
             return personSqliteDatabaseHelper.getWritableDatabase().insert(personSqliteDatabaseHelper.TABLE_NAME, null, contentValues);
@@ -52,7 +52,7 @@ public class PersonSqliteDatabaseAdapter {
         contentValues.put(personSqliteDatabaseHelper.NAME, name);
         contentValues.put(personSqliteDatabaseHelper.PHONE_NUMBER, phoneNumber);
         contentValues.put(personSqliteDatabaseHelper.EMAIL, emailId);
-        contentValues.put(personSqliteDatabaseHelper.GROUP_NAME, groupName);
+        contentValues.put(personSqliteDatabaseHelper.GROUP_ID, groupName);
 
         String[] whereArgs = {id};
         int totalRowUpdated = personSqliteDatabaseHelper.getWritableDatabase().update(personSqliteDatabaseHelper.TABLE_NAME,  contentValues, personSqliteDatabaseHelper.ID +"=?", whereArgs);
@@ -87,7 +87,7 @@ public class PersonSqliteDatabaseAdapter {
         List<PersonModel> personModelList = new ArrayList<>();
         Cursor cursor = null;
         String[] colums = { personSqliteDatabaseHelper.ID, personSqliteDatabaseHelper.NAME, personSqliteDatabaseHelper.PHONE_NUMBER,
-                personSqliteDatabaseHelper.EMAIL, personSqliteDatabaseHelper.GROUP_NAME};
+                personSqliteDatabaseHelper.EMAIL, personSqliteDatabaseHelper.GROUP_ID};
 
         cursor = personSqliteDatabaseHelper.getWritableDatabase().query(personSqliteDatabaseHelper.TABLE_NAME, colums, null, null, null, null, null);
 
@@ -97,9 +97,9 @@ public class PersonSqliteDatabaseAdapter {
             int nameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.NAME);
             int phoneNumberIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.PHONE_NUMBER);
             int emailIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.EMAIL);
-            int groupNameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.GROUP_NAME);
+            int groupNameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.GROUP_ID);
 
-            personModel.ID = cursor.getString(idIndex);
+            personModel.ID = cursor.getInt(idIndex);
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
@@ -122,7 +122,7 @@ public class PersonSqliteDatabaseAdapter {
     public PersonModel getPersonById(String id) {
         Cursor cursor = null;
         String[] colums = { personSqliteDatabaseHelper.ID, personSqliteDatabaseHelper.NAME, personSqliteDatabaseHelper.PHONE_NUMBER,
-                personSqliteDatabaseHelper.EMAIL, personSqliteDatabaseHelper.GROUP_NAME};
+                personSqliteDatabaseHelper.EMAIL, personSqliteDatabaseHelper.GROUP_ID};
         String[]  selectionArgs = {id};
 
         cursor = personSqliteDatabaseHelper.getWritableDatabase().query(personSqliteDatabaseHelper.TABLE_NAME, colums, personSqliteDatabaseHelper.ID +"=?", selectionArgs, null, null, null);
@@ -133,9 +133,9 @@ public class PersonSqliteDatabaseAdapter {
             int nameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.NAME);
             int phoneNumberIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.PHONE_NUMBER);
             int emailIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.EMAIL);
-            int groupNameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.GROUP_NAME);
+            int groupNameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.GROUP_ID);
 
-            personModel.ID = cursor.getString(idIndex);
+            personModel.ID = cursor.getInt(idIndex);
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
