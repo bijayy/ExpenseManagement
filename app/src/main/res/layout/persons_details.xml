@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expenseGroupsItemsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="4dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="0,1" >
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvGroupId"
+                android:text="1" />
+
+            <TextView
+                android:id="@+id/tvPersonId"
+                android:text="PersonId" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvPersonName"
+                android:text="Person Name" />
+
+            <TextView
+                android:id="@+id/tvPersonMobileNumber"
+                android:text="Person Mobile" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvPersonEmail"
+                android:layout_span="2"
+                android:text="Person Email" />
+        </TableRow>
+
+        <TableRow>
+            <Button
+                android:id="@+id/btnEditPerson"
+                android:text="Edit" />
+
+            <Button
+                android:id="@+id/btnDeletePerson"
+                android:text="Delete" />
+        </TableRow>
+
+    </TableLayout>
+</android.support.v7.widget.CardView>

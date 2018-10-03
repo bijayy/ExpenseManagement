@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expenseGroupsItemsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="4dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:stretchColumns="0,1" >
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvExpenseId"
+                android:text="1" />
+
+            <TextView
+                android:id="@+id/tvExpenseDate"
+                android:text="Expense Date" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvByWhom"
+                android:text="By Whom" />
+
+            <TextView
+                android:id="@+id/tvForWhom"
+                android:text="For Whom" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvProductName"
+                android:text="Product Name" />
+
+            <TextView
+                android:id="@+id/tvAmount"
+                android:text="Amount" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvPurpose"
+                android:layout_span="2"
+                android:text="Purpose" />
+        </TableRow>
+
+        <TableRow>
+            <Button
+                android:id="@+id/btnEditExpense"
+                android:text="Edit" />
+
+            <Button
+                android:id="@+id/btnDeleteExpense"
+                android:text="Delete" />
+        </TableRow>
+
+    </TableLayout>
+</android.support.v7.widget.CardView>
