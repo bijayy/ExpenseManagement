@@ -2,6 +2,8 @@ package com.example.bijay.expensemanagement.Views.Activities;
 
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import com.example.bijay.expensemanagement.Data.PersonSqliteDatabaseAdapter;
 import com.example.bijay.expensemanagement.Models.ExpensesGroupModel;
 import com.example.bijay.expensemanagement.Models.PersonModel;
 import com.example.bijay.expensemanagement.R;
+import com.example.bijay.expensemanagement.Views.Fragments.ViewExpensesGroupsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -199,9 +202,14 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 
 		switch (view.getId()) {
 			case R.id.btnCreateNewGroup:
-				createNewExpenseGroupLayout.setVisibility(View.VISIBLE);
+				createNewExpenseGroupLayout.setVisibility(View.GONE);
 				addExpensesLayout.setVisibility(View.GONE);
 				addExpensesFirstViewLayout.setVisibility(View.GONE);
+
+				FragmentManager fragmentManager = getSupportFragmentManager();
+				FragmentTransaction transaction = fragmentManager.beginTransaction();
+				transaction.add(new ViewExpensesGroupsFragment(), "ViewExpensesGroupsFragment");
+				transaction.commit();
 
 				Toast.makeText(this, "Creating New Group", Toast.LENGTH_LONG).show();
 				Log.d(TAG, "[onClick(] btnCreateNewGroup is fine");
