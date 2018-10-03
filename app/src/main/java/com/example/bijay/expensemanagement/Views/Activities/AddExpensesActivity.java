@@ -1,4 +1,4 @@
-package com.example.bijay.expensemanagement;
+package com.example.bijay.expensemanagement.Views.Activities;
 
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
@@ -14,6 +14,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.bijay.expensemanagement.Data.ExpensesGroupSqliteDatabaseAdapter;
+import com.example.bijay.expensemanagement.Data.PersonSqliteDatabaseAdapter;
+import com.example.bijay.expensemanagement.Models.ExpensesGroupModel;
+import com.example.bijay.expensemanagement.Models.PersonModel;
+import com.example.bijay.expensemanagement.R;
 
 import java.util.ArrayList;
 import java.util.List;

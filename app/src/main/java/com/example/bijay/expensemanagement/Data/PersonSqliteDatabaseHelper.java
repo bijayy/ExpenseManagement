@@ -1,4 +1,4 @@
-package com.example.bijay.expensemanagement;
+package com.example.bijay.expensemanagement.Data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,7 +25,7 @@ public class PersonSqliteDatabaseHelper extends SQLiteOpenHelper {
             ExpensesGroupSqliteDatabaseHelper.TABLE_NAME + "("+ ExpensesGroupSqliteDatabaseHelper.ID+"));";
     private String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-    PersonSqliteDatabaseHelper(Context context) {
+    public PersonSqliteDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
         Log.d(TAG, "Constructor running in thread: " + Thread.currentThread().getName());

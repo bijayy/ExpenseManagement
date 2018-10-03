@@ -1,12 +1,12 @@
-package com.example.bijay.expensemanagement;
+package com.example.bijay.expensemanagement.Models;
 
 public class ExpensesModel {
-    int ID;
-    int PersonId;
-    String Date;
-    String ByWhom;
-    String ForWhom;
-    String Purpose;
-    String ProductName;
-    String Amount;
+    public int ID;
+    public int PersonId;
+    public String Date;
+    public String ByWhom;
+    public String ForWhom;
+    public String Purpose;
+    public String ProductName;
+    public String Amount;
 }

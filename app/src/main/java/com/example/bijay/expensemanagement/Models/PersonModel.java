@@ -1,9 +1,9 @@
-package com.example.bijay.expensemanagement;
+package com.example.bijay.expensemanagement.Models;
 
 public class PersonModel {
-    int ID;
-    String Name;
-    String MobileNumber;
-    String Email;
-    int GroupID;
+    public int ID;
+    public String Name;
+    public String MobileNumber;
+    public String Email;
+    public int GroupID;
 }

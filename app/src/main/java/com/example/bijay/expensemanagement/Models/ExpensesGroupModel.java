@@ -1,6 +1,6 @@
-package com.example.bijay.expensemanagement;
+package com.example.bijay.expensemanagement.Models;
 
 public class ExpensesGroupModel {
-    int ID;
-    String GroupName;
+    public int ID;
+    public String GroupName;
 }

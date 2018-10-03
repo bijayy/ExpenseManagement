@@ -1,9 +1,11 @@
-package com.example.bijay.expensemanagement;
+package com.example.bijay.expensemanagement.Data;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+
+import com.example.bijay.expensemanagement.Models.PersonModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ public class PersonSqliteDatabaseAdapter {
     private static final String TAG = PersonSqliteDatabaseHelper.class.getSimpleName();
     private PersonSqliteDatabaseHelper personSqliteDatabaseHelper;
 
-    PersonSqliteDatabaseAdapter(Context context) {
+    public PersonSqliteDatabaseAdapter(Context context) {
         personSqliteDatabaseHelper = new PersonSqliteDatabaseHelper(context);
 
         Log.d(TAG, "Constructor running in thread: " + Thread.currentThread().getName());

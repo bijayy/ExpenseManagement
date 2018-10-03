@@ -1,4 +1,4 @@
-package com.example.bijay.expensemanagement;
+package com.example.bijay.expensemanagement.Data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,7 +20,7 @@ public class ExpensesGroupSqliteDatabaseHelper extends SQLiteOpenHelper {
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + GROUP_NAME + " VARCHAR(50));";
     private String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-    ExpensesGroupSqliteDatabaseHelper(Context context) {
+    public ExpensesGroupSqliteDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
         Log.d(TAG, "Constructor running in thread: " + Thread.currentThread().getName());

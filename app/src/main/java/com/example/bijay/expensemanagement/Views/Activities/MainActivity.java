@@ -1,4 +1,4 @@
-package com.example.bijay.expensemanagement;
+package com.example.bijay.expensemanagement.Views.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.bijay.expensemanagement.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
