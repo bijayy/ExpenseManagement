@@ -158,6 +158,8 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 						persons.add(person);
 					}
 				}
+
+				addOrUpdatePersons(spinnerPersons);
 			}
 
 			@Override
@@ -373,6 +375,15 @@ public class AddExpensesActivity extends AppCompatActivity implements View.OnCli
 
 	private void addOrUpdateExpenseGroup(Spinner spinner) {
 		ArrayAdapter<ExpensesGroupModel> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, expenseGroups);
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(spinnerAdapter);
+
+		//spinnerAdapter.add("DELHI");
+		//spinnerAdapter.notifyDataSetChanged();
+	}
+
+	private void addOrUpdatePersons(Spinner spinner) {
+		ArrayAdapter<PersonModel> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, persons);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(spinnerAdapter);
 
