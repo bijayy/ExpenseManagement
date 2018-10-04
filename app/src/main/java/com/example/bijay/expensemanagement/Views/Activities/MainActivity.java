@@ -1,6 +1,8 @@
 package com.example.bijay.expensemanagement.Views.Activities;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.bijay.expensemanagement.R;
+import com.example.bijay.expensemanagement.Views.Fragments.ViewExpensesGroupsFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnPrepareExpensesList = findViewById(R.id.btnPrepareExpensesList);
+        /*btnPrepareExpensesList = findViewById(R.id.btnPrepareExpensesList);
         btnAddExpenses = findViewById(R.id.btnAddExpenses);
         btnCalculateExpenses = findViewById(R.id.btnCalculateExpenses);
         btnDeleteExpenses = findViewById(R.id.btnDeleteExpenses);
@@ -32,14 +35,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnPrepareExpensesList.setOnClickListener(this);
         btnAddExpenses.setOnClickListener(this);
         btnCalculateExpenses.setOnClickListener(this);
-        btnDeleteExpenses.setOnClickListener(this);
+        btnDeleteExpenses.setOnClickListener(this);*/
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.mainActivityLayout, new ViewExpensesGroupsFragment(), "ViewExpensesGroupsFragment");
+        transaction.commit();
 
         Log.d(TAG, "[onCreate] Everything is fine");
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = null;
+        /*Intent intent = null;
 
         switch (view.getId())
         {
@@ -76,6 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Log.d(TAG, "[onClick][default] Not Implemented Exception Page");
                 break;
-        }
+        }*/
     }
 }

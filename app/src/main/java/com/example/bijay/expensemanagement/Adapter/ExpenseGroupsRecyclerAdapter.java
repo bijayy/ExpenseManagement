@@ -53,7 +53,8 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
     //Setting the listener on each item of the recycler view
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ExpensesGroupModel expensesGroupModel = this.expensesGroupModels.get(position);
+        ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
+        expensesGroupModel = this.expensesGroupModels.get(position);
         holder.sendData(expensesGroupModel);
         holder.setListener();
 
@@ -81,7 +82,7 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
 
         //Setting button text present in the "recycler_view_item.xml" with employee name
         void sendData(ExpensesGroupModel expensesGroupModel) {
-            tvExpenseGroupId.setText(expensesGroupModel.ID);
+            tvExpenseGroupId.setText(expensesGroupModel.ID +"");
             tvExpenseGroupName.setText(expensesGroupModel.GroupName);
 
             Log.d(TAG, "[sendData] group id: "+ expensesGroupModel.ID +" group name: " + expensesGroupModel.GroupName);
