@@ -79,7 +79,7 @@ public class ViewExpensesFragment extends Fragment {
         float totalExpenses = 0;
 
         for(ExpensesModel expensesModel : expensesModels) {
-            if(!expensesModel.Amount.isEmpty() )
+            if(!expensesModel.Amount.isEmpty() && expensesModel.Amount.matches("^[0-9]+$"))
                 totalExpenses += Float.parseFloat(expensesModel.Amount);
         }
 

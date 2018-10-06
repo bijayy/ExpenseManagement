@@ -97,7 +97,7 @@ public class AddExpenseFragment extends Fragment implements View.OnClickListener
                     Snackbar.make(addExpenseLayout, Html.fromHtml("<font color=\"#00ff99\">Expense added successfully</font>"), Snackbar.LENGTH_SHORT).show();
                 }
                 else {
-                    Snackbar.make(addExpenseLayout, Html.fromHtml("<font color=\"#ffff99\">Please select Persons</font>"), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(addExpenseLayout, Html.fromHtml("<font color=\"#ffff99\">Please select persons or invalid amount</font>"), Snackbar.LENGTH_SHORT).show();
                 }
 
                 Log.d(TAG, "[onClick] [btnSave] is called");
@@ -168,7 +168,8 @@ public class AddExpenseFragment extends Fragment implements View.OnClickListener
     }
 
     private boolean isValid() {
-        if(spinnerByWhom.getSelectedItemPosition() > 0 && spinnerForWhom.getSelectedItemPosition() > 0)
+        if(spinnerByWhom.getSelectedItemPosition() > 0 && spinnerForWhom.getSelectedItemPosition() > 0
+                && !etAmount.getText().toString().isEmpty() && etAmount.getText().toString().matches("^[0-9]+$"))
             return true;
         return  false;
     }
