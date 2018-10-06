@@ -18,42 +18,77 @@
 
         <TableRow>
             <TextView
+                android:id="@+id/tvExpenseIdText"
+                android:text="Expense Id: " />
+
+            <TextView
                 android:id="@+id/tvExpenseId"
-                android:text="Expense Id" />
+                android:text="" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvExpenseDateText"
+                android:text="Expense Date: " />
 
             <TextView
                 android:id="@+id/tvExpenseDate"
-                android:text="Expense Date" />
+                android:text="" />
         </TableRow>
 
         <TableRow>
             <TextView
+                android:id="@+id/tvByWhomText"
+                android:text="By Whom: " />
+
+            <TextView
                 android:id="@+id/tvByWhom"
-                android:text="By Whom" />
+                android:text="" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvForWhomText"
+                android:text="For Whom: " />
 
             <TextView
                 android:id="@+id/tvForWhom"
-                android:text="For Whom" />
+                android:text="" />
         </TableRow>
 
         <TableRow>
             <TextView
+                android:id="@+id/tvProductNameText"
+                android:text="Product Name: " />
+
+            <TextView
                 android:id="@+id/tvProductName"
-                android:text="Product Name" />
+                android:text="" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAmountText"
+                android:text="Amount: " />
 
             <TextView
                 android:id="@+id/tvAmount"
-                android:text="Amount" />
+                android:text="" />
         </TableRow>
 
         <TableRow>
             <TextView
+                android:id="@+id/tvPurposeText"
+                android:text="Purpose: " />
+            <TextView
                 android:id="@+id/tvPurpose"
-                android:layout_span="2"
-                android:text="Purpose" />
+                android:text="" />
         </TableRow>
 
         <TableRow>
+            <Button
+                android:layout_weight="1"
+                android:visibility="invisible"/>
             <Button
                 android:id="@+id/btnEditExpense"
                 android:text="Edit" />
@@ -61,6 +96,9 @@
             <Button
                 android:id="@+id/btnDeleteExpense"
                 android:text="Delete" />
+            <Button
+                android:layout_weight="1"
+                android:visibility="invisible"/>
         </TableRow>
 
     </TableLayout>

@@ -15,14 +15,25 @@
     <TableRow>
 
         <TextView
+            android:id="@+id/tvExpenseManagementTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_span="2"
+            android:text="Expenses Management"/>
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
             android:id="@+id/tvExpenseMenuTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_span="2"
-            android:text="Expenses Menu"
-            android:textSize="20sp" />
+            android:text="Expenses Menu"/>
     </TableRow>
 
     <TableRow>
@@ -53,8 +64,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:layout_span="2"
-            android:text="Expenses Group Menu"
-            android:textSize="20sp" />
+            android:text="Expenses Group Menu" />
     </TableRow>
 
     <TableRow>
@@ -79,8 +89,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:layout_span="2"
-            android:text="Persons Menu"
-            android:textSize="20sp" />
+            android:text="Persons Menu"/>
     </TableRow>
 
     <TableRow>

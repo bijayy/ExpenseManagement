@@ -12,30 +12,53 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:stretchColumns="0,1" >
+        android:stretchColumns="0,1"
+        android:layout_margin="5dp">
 
         <TableRow>
             <TextView
+                android:id="@+id/tvGroupName"
+                android:text="Group Id. Name: " />
+
+            <TextView
                 android:id="@+id/tvGroupIdName"
-                android:text="Group" />
+                android:text="" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvPersonName"
+                android:text="Id. Name: " />
 
             <TextView
                 android:id="@+id/tvPersonIdName"
-                android:text="PersonId" />
+                android:text="" />
         </TableRow>
 
         <TableRow>
             <TextView
+                android:id="@+id/tvPersonMobile"
+                android:text="Mobile: " />
+
+            <TextView
                 android:id="@+id/tvPersonMobileNumber"
-                android:text="Person Mobile" />
+                android:text="" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvPersonEmailId"
+                android:text="Email: " />
 
             <TextView
                 android:id="@+id/tvPersonEmail"
-                android:layout_span="2"
-                android:text="Person Email" />
+                android:text="" />
         </TableRow>
 
         <TableRow>
+            <Button
+                android:layout_weight="1"
+                android:visibility="invisible"/>
             <Button
                 android:id="@+id/btnEditPerson"
                 android:text="Edit" />
@@ -43,6 +66,9 @@
             <Button
                 android:id="@+id/btnDeletePerson"
                 android:text="Delete" />
+            <Button
+                android:layout_weight="1"
+                android:visibility="invisible"/>
         </TableRow>
 
     </TableLayout>
