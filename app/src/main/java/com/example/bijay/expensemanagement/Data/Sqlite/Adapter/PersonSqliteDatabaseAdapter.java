@@ -149,7 +149,7 @@ public class PersonSqliteDatabaseAdapter {
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
-            personModel.ExpenseGroupModel.ID = cursor.getInt(groupIDIndex);
+            personModel.ExpenseGroupModel = getExpensesGroupById(cursor.getInt(groupIDIndex) + "");
 
             Log.d(TAG, "getPersonById() found record of person id: " + id + " running in thread: " + Thread.currentThread().getName());
             return personModel;

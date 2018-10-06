@@ -1,6 +1,8 @@
 package com.example.bijay.expensemanagement.Adapter;
 
 import android.content.Context;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bijay.expensemanagement.Data.Sqlite.Adapter.PersonSqliteDatabaseAdapter;
 import com.example.bijay.expensemanagement.Models.ExpensesModel;
+import com.example.bijay.expensemanagement.Models.PersonModel;
 import com.example.bijay.expensemanagement.R;
 
 import java.util.List;
@@ -22,10 +26,12 @@ public class ExpensesRecyclerAdapter extends RecyclerView.Adapter<ExpensesRecycl
     //Variable to inflate the view out of the "expenses_group_items.xml"
     private LayoutInflater layoutInflater = null;
     private List<ExpensesModel> expensesModels = null;
+    private Context context;
 
     public ExpensesRecyclerAdapter(Context context, List<ExpensesModel> expensesModels) {
         this.layoutInflater = LayoutInflater.from(context);
         this.expensesModels = expensesModels;
+        this.context = context;
 
         Log.d(TAG, "[ExpensesRecyclerAdapter] constructor initialization is done, expensesModels: " + this.expensesModels);
     }
@@ -63,38 +69,56 @@ public class ExpensesRecyclerAdapter extends RecyclerView.Adapter<ExpensesRecycl
     //MyViewHolder class which initializes the Button present in the "recycler_view_item.xml" and assign the data into this.
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView tvExpenseGroupIdName;
-        TextView tvPersonIdName;
-        Button editExpense;
-        Button deleteExpense;
+        TextView tvExpenseId;
+        TextView tvExpenseDate;
+        TextView tvByWhom;
+        TextView tvForWhom;
+        TextView tvProductName;
+        TextView tvAmount;
+        TextView tvPurpose;
+
+        Button btnEditExpense;
+        Button btnDeleteExpense;
 
         //Getting button present in the "recycler_view_item.xml"
         MyViewHolder(View viewItem) {
             super(viewItem);
-           /* tvExpenseGroupId = viewItem.findViewById(R.id.tv);
-            tvExpenseGroupName = viewItem.findViewById(R.id.tvExpenseGroupName);
-            editExpenseGroup = viewItem.findViewById(R.id.btnEditExpenseGroup);
-            deleteExpenseGroup = viewItem.findViewById(R.id.btnDeleteExpenseGroup);
-*/
+            tvExpenseId = viewItem.findViewById(R.id.tvExpenseId);
+            tvExpenseDate = viewItem.findViewById(R.id.tvExpenseDate);
+            tvByWhom = viewItem.findViewById(R.id.tvByWhom);
+            tvForWhom = viewItem.findViewById(R.id.tvForWhom);
+            tvProductName = viewItem.findViewById(R.id.tvProductName);
+            tvAmount = viewItem.findViewById(R.id.tvAmount);
+            tvPurpose = viewItem.findViewById(R.id.tvPurpose);
+
+            btnEditExpense = viewItem.findViewById(R.id.btnEditExpense);
+            btnDeleteExpense = viewItem.findViewById(R.id.btnDeleteExpense);
+
             Log.d(TAG, "[MyViewHolder] constructor initialization is done");
         }
 
         //Setting button text present in the "recycler_view_item.xml" with employee name
         void sendData(ExpensesModel expensesModel) {
-           /* tvExpenseGroupId.setText(expensesModel.ID);
-            tvExpenseGroupId.setText(expensesModel.Person.ID + ". "+ expensesModel.Person.Name);
-            tvExpenseGroupId.setText(expensesModel.ExpensesGroup.ID + ". "+ expensesModel.ExpensesGroup.GroupName);
-            tvExpenseGroupName.setText(expensesModel.Date);
-            tvExpenseGroupName.setText(expensesModel.ByWhom);
-            tvExpenseGroupName.setText(expensesModel.ForWhom);*/
+            tvExpenseId.setText(expensesModel.ID + "");
+            tvExpenseDate.setText(expensesModel.Date);
+            tvByWhom.setText(getPersonsById(expensesModel.ByWhom));
+            if(expensesModel.ByWhom.equals(expensesModel.ForWhom)){
+                tvForWhom.setText("Self");
+            }
+            else {
+                tvForWhom.setText(getPersonsById(expensesModel.ForWhom));
+            }
+            tvProductName.setText(expensesModel.ProductName);
+            tvAmount.setText(expensesModel.Amount);
+            tvPurpose.setText(expensesModel.Purpose);
 
             Log.d(TAG, "[sendData] expense id: "+ expensesModel.ID);
         }
 
         //Setting click listener on button present in the "recycler_view_item.xml"
         void setListener() {
-            /*editExpenseGroup.setOnClickListener(this);
-            deleteExpenseGroup.setOnClickListener(this);*/
+            btnEditExpense.setOnClickListener(this);
+            btnDeleteExpense.setOnClickListener(this);
 
             Log.d(TAG, "[setListener] is done");
         }
@@ -106,5 +130,13 @@ public class ExpensesRecyclerAdapter extends RecyclerView.Adapter<ExpensesRecycl
 
             Log.d(TAG, "[onClick] is triggered");
         }
+    }
+
+    private String getPersonsById(String id) {
+        PersonSqliteDatabaseAdapter personSqliteDatabaseAdapter = new PersonSqliteDatabaseAdapter(context);
+        PersonModel personModel = personSqliteDatabaseAdapter.getPersonById(id);
+
+        Log.d(TAG, "[getPersonsById] Person Id: "+ personModel.ID +" fetched successfully");
+        return personModel.ID +". "+ personModel.Name;
     }
 }
