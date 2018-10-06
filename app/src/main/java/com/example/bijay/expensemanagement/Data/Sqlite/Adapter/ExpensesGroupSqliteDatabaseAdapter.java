@@ -43,17 +43,19 @@ public class ExpensesGroupSqliteDatabaseAdapter {
      * Update data of ExpensesGroupModel in sqlite.
      * @param expensesGroupModel
      */
-    public int updateExpensesGroupById(ExpensesGroupModel expensesGroupModel) {
+    public int updateExpensesGroup(ExpensesGroupModel expensesGroupModel) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(expensesGroupSqliteDatabaseHelper.GROUP_NAME, expensesGroupModel.GroupName);
 
         String[] whereArgs = {expensesGroupModel.ID + ""};
         int totalRowUpdated = expensesGroupSqliteDatabaseHelper.getWritableDatabase().update(expensesGroupSqliteDatabaseHelper.TABLE_NAME,  contentValues, expensesGroupSqliteDatabaseHelper.ID +"=?", whereArgs);
 
-        if(totalRowUpdated < 1)
-            Log.d(TAG, "updateExpensesGroupById() not found expenses group id: "+ expensesGroupModel.ID +"  running in thread: " + Thread.currentThread().getName());
+        if(totalRowUpdated < 1) {
+            Log.d(TAG, "updateExpensesGroup() not found expenses group id: " + expensesGroupModel.ID + "  running in thread: " + Thread.currentThread().getName());
+            return 0;
+        }
 
-        Log.d(TAG, "updateExpensesGroupById() updated expenses group id "+ expensesGroupModel.ID +" running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "updateExpensesGroup() updated expenses group id "+ expensesGroupModel.ID +" running in thread: " + Thread.currentThread().getName());
         return totalRowUpdated;
     }
 

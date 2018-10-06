@@ -14,14 +14,20 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.bijay.expensemanagement.Adapter.CustomSpinner;
+import com.example.bijay.expensemanagement.Models.ExpensesGroupModel;
 import com.example.bijay.expensemanagement.R;
+import com.example.bijay.expensemanagement.Views.Fragments.EditExpenseGroupFragment;
 import com.example.bijay.expensemanagement.Views.Fragments.ExpensesFilterFragment;
 import com.example.bijay.expensemanagement.Views.Fragments.MainFragment;
 import com.example.bijay.expensemanagement.Views.Fragments.ViewExpensesGroupsFragment;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.regex.Pattern;
+
+public class MainActivity extends AppCompatActivity implements ViewExpensesGroupsFragment.SendDataBetweenFragment{
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private ExpensesGroupModel expensesGroupModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +41,22 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
         Log.d(TAG, "[onCreate] is done");
+    }
+
+
+    @Override
+    public void sendData(String data) {
+        String[] splitIdAndGroupName = data.split(Pattern.quote(". "));
+        ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
+        expensesGroupModel.ID = Integer.parseInt(splitIdAndGroupName[0]);
+        expensesGroupModel.GroupName = splitIdAndGroupName[1];
+        this.expensesGroupModel = expensesGroupModel;
+
+        EditExpenseGroupFragment editExpenseGroupFragment = new EditExpenseGroupFragment();
+        editExpenseGroupFragment.sendData(this.expensesGroupModel);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(editExpenseGroupFragment, "EditExpenseGroupFragment");
+        fragmentTransaction.commit();
     }
 }

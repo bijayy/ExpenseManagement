@@ -23,6 +23,7 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
     //Variable to inflate the view out of the "expenses_group_items.xml"
     private LayoutInflater layoutInflater = null;
     private List<ExpensesGroupModel> expensesGroupModels = null;
+    private IEditDeleteClickListener listener;
 
     public ExpenseGroupsRecyclerAdapter(Context context, List<ExpensesGroupModel> expensesGroupModels) {
         this.layoutInflater = LayoutInflater.from(context);
@@ -62,6 +63,15 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
         Log.d(TAG, "[onBindViewHolder] ViewHolder: "+ holder +" and expense group position: " + position);
     }
 
+    public void setEditDeleteClickListener(IEditDeleteClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface IEditDeleteClickListener {
+        ExpensesGroupModel OnEditClickListener(View view, int position);
+        void OnDeleteListener(View view, int position);
+    }
+
     //MyViewHolder class which initializes the Button present in the "recycler_view_item.xml" and assign the data into this.
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -99,20 +109,32 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.btnEditExpenseGroup:
-                    ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter = new ExpensesGroupSqliteDatabaseAdapter(layoutInflater.getContext());
+                    /*ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter = new ExpensesGroupSqliteDatabaseAdapter(layoutInflater.getContext());
                     ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
-                    expensesGroupModel.ID = getLayoutPosition();
+                    expensesGroupModel.ID = getLayoutPosition();*/
+                    if(listener != null)
+                    {
+                        ExpensesGroupModel expensesGroup = listener.OnEditClickListener(view, getLayoutPosition());
+                        ExpensesGroupModel expensesGroupModel = expensesGroupModels.get(getLayoutPosition());
+                        expensesGroupModel.ID = expensesGroup.ID;
+                        expensesGroupModel.GroupName = expensesGroup.GroupName;
 
+                        //notifyItemChanged(getLayoutPosition());
+                    }
                     //xpensesGroupSqliteDatabaseAdapter.updateExpensesGroupById();
-
                     //Toast.makeText(layoutInflater.getContext(), "", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "[onClick][btnEditExpenseGroup] item position: " + getLayoutPosition());
                     break;
 
                 case R.id.btnDeleteExpenseGroup:
+                    if(listener != null)
+                    {
+                        listener.OnDeleteListener(view, getLayoutPosition());
+                        expensesGroupModels.remove(getLayoutPosition());
+                        notifyItemRemoved(getLayoutPosition());
+                    }
 
-
-                    Toast.makeText(layoutInflater.getContext(), "clicked: ${(v as Button).text}", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "[onClick][btnDeleteExpenseGroup] item position: " + getLayoutPosition());
                     break;
 
                 default:
