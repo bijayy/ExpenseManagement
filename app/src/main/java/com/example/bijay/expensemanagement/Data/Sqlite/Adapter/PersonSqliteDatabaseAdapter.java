@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.bijay.expensemanagement.Data.Sqlite.Helper.PersonSqliteDatabaseHelper;
+import com.example.bijay.expensemanagement.Models.ExpensesGroupModel;
 import com.example.bijay.expensemanagement.Models.PersonModel;
 
 import java.util.ArrayList;
@@ -15,15 +16,18 @@ public class PersonSqliteDatabaseAdapter {
 
     private static final String TAG = PersonSqliteDatabaseHelper.class.getSimpleName();
     private PersonSqliteDatabaseHelper personSqliteDatabaseHelper;
+    private Context context;
 
     public PersonSqliteDatabaseAdapter(Context context) {
         personSqliteDatabaseHelper = new PersonSqliteDatabaseHelper(context);
+        this.context = context;
 
         Log.d(TAG, "Constructor running in thread: " + Thread.currentThread().getName());
     }
 
     /**
      * Insert data of PersonModel in sqlite.
+     *
      * @param person
      */
     public long addPerson(PersonModel person) {
@@ -32,7 +36,7 @@ public class PersonSqliteDatabaseAdapter {
             contentValues.put(personSqliteDatabaseHelper.NAME, person.Name);
             contentValues.put(personSqliteDatabaseHelper.PHONE_NUMBER, person.MobileNumber);
             contentValues.put(personSqliteDatabaseHelper.EMAIL, person.Email);
-            //contentValues.put(personSqliteDatabaseHelper.GROUP_ID, person.ExpensesGroup.ID);
+            contentValues.put(personSqliteDatabaseHelper.GROUP_ID, person.ExpenseGroupModel.ID);
 
             Log.d(TAG, "addPerson() successfully added person details running in thread: " + Thread.currentThread().getName());
             return personSqliteDatabaseHelper.getWritableDatabase().insert(personSqliteDatabaseHelper.TABLE_NAME, null, contentValues);
@@ -44,6 +48,7 @@ public class PersonSqliteDatabaseAdapter {
 
     /**
      * Update data of PersonModel in sqlite.
+     *
      * @param id
      * @param name
      * @param phoneNumber
@@ -58,27 +63,28 @@ public class PersonSqliteDatabaseAdapter {
         contentValues.put(personSqliteDatabaseHelper.GROUP_ID, groupName);
 
         String[] whereArgs = {id};
-        int totalRowUpdated = personSqliteDatabaseHelper.getWritableDatabase().update(personSqliteDatabaseHelper.TABLE_NAME,  contentValues, personSqliteDatabaseHelper.ID +"=?", whereArgs);
+        int totalRowUpdated = personSqliteDatabaseHelper.getWritableDatabase().update(personSqliteDatabaseHelper.TABLE_NAME, contentValues, personSqliteDatabaseHelper.ID + "=?", whereArgs);
 
-        if(totalRowUpdated < 1)
-            Log.d(TAG, "updatePersonById() unot found person id: "+ id +"  running in thread: " + Thread.currentThread().getName());
+        if (totalRowUpdated < 1)
+            Log.d(TAG, "updatePersonById() unot found person id: " + id + "  running in thread: " + Thread.currentThread().getName());
 
-        Log.d(TAG, "updatePersonById() updated person id "+ id +" running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "updatePersonById() updated person id " + id + " running in thread: " + Thread.currentThread().getName());
         return totalRowUpdated;
     }
 
     /**
      * Delete PersonModel by id.
+     *
      * @param id
      */
     public int deletePersonById(String id) {
         String[] whereArgs = {id};
-        int totalRowDeleted = personSqliteDatabaseHelper.getWritableDatabase().delete(personSqliteDatabaseHelper.TABLE_NAME, personSqliteDatabaseHelper.ID +"=?", whereArgs);
+        int totalRowDeleted = personSqliteDatabaseHelper.getWritableDatabase().delete(personSqliteDatabaseHelper.TABLE_NAME, personSqliteDatabaseHelper.ID + "=?", whereArgs);
 
-        if(totalRowDeleted < 1)
-            Log.d(TAG, "deletePersonById() not found person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+        if (totalRowDeleted < 1)
+            Log.d(TAG, "deletePersonById() not found person id: " + id + " running in thread: " + Thread.currentThread().getName());
 
-        Log.d(TAG, "deletePersonById() deleted person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+        Log.d(TAG, "deletePersonById() deleted person id: " + id + " running in thread: " + Thread.currentThread().getName());
         return totalRowDeleted;
     }
 
@@ -89,12 +95,12 @@ public class PersonSqliteDatabaseAdapter {
 
         List<PersonModel> personModelList = new ArrayList<>();
         Cursor cursor = null;
-        String[] colums = { personSqliteDatabaseHelper.ID, personSqliteDatabaseHelper.NAME, personSqliteDatabaseHelper.PHONE_NUMBER,
+        String[] colums = {personSqliteDatabaseHelper.ID, personSqliteDatabaseHelper.NAME, personSqliteDatabaseHelper.PHONE_NUMBER,
                 personSqliteDatabaseHelper.EMAIL, personSqliteDatabaseHelper.GROUP_ID};
 
         cursor = personSqliteDatabaseHelper.getWritableDatabase().query(personSqliteDatabaseHelper.TABLE_NAME, colums, null, null, null, null, null);
 
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             PersonModel personModel = new PersonModel();
             int idIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.ID);
             int nameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.NAME);
@@ -106,12 +112,12 @@ public class PersonSqliteDatabaseAdapter {
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
-            //personModel.ExpensesGroup.ID = cursor.getInt(groupIDIndex);
+            personModel.ExpenseGroupModel = getExpensesGroupById(cursor.getInt(groupIDIndex) + "");
 
             personModelList.add(personModel);
         }
 
-        if(personModelList.isEmpty())
+        if (personModelList.isEmpty())
             Log.d(TAG, "getPersons() found no records running in thread: " + Thread.currentThread().getName());
 
         Log.d(TAG, "getPersons() found records running in thread: " + Thread.currentThread().getName());
@@ -120,17 +126,18 @@ public class PersonSqliteDatabaseAdapter {
 
     /**
      * Select PersonModel by id.
+     *
      * @param id
      */
     public PersonModel getPersonById(String id) {
         Cursor cursor = null;
-        String[] colums = { personSqliteDatabaseHelper.ID, personSqliteDatabaseHelper.NAME, personSqliteDatabaseHelper.PHONE_NUMBER,
+        String[] colums = {personSqliteDatabaseHelper.ID, personSqliteDatabaseHelper.NAME, personSqliteDatabaseHelper.PHONE_NUMBER,
                 personSqliteDatabaseHelper.EMAIL, personSqliteDatabaseHelper.GROUP_ID};
-        String[]  selectionArgs = {id};
+        String[] selectionArgs = {id};
 
-        cursor = personSqliteDatabaseHelper.getWritableDatabase().query(personSqliteDatabaseHelper.TABLE_NAME, colums, personSqliteDatabaseHelper.ID +"=?", selectionArgs, null, null, null);
+        cursor = personSqliteDatabaseHelper.getWritableDatabase().query(personSqliteDatabaseHelper.TABLE_NAME, colums, personSqliteDatabaseHelper.ID + "=?", selectionArgs, null, null, null);
 
-        if(cursor.moveToNext()) {
+        if (cursor.moveToNext()) {
             PersonModel personModel = new PersonModel();
             int idIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.ID);
             int nameIndex = cursor.getColumnIndex(personSqliteDatabaseHelper.NAME);
@@ -142,13 +149,21 @@ public class PersonSqliteDatabaseAdapter {
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
-            //personModel.ExpensesGroup.ID = cursor.getInt(groupIDIndex);
+            personModel.ExpenseGroupModel.ID = cursor.getInt(groupIDIndex);
 
-            Log.d(TAG, "getPersonById() found record of person id: "+ id +" running in thread: " + Thread.currentThread().getName());
+            Log.d(TAG, "getPersonById() found record of person id: " + id + " running in thread: " + Thread.currentThread().getName());
             return personModel;
         }
 
         Log.d(TAG, "getPersonById() no record running in thread: " + Thread.currentThread().getName());
         return null;
+    }
+
+    private ExpensesGroupModel getExpensesGroupById(String id) {
+        ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter = new ExpensesGroupSqliteDatabaseAdapter(context);
+        ExpensesGroupModel expensesGroupModel = expensesGroupSqliteDatabaseAdapter.getExpensesGroupById(id);
+
+        Log.d(TAG, "[getExpenseGroups] Expense group: "+ expensesGroupModel.GroupName +" fetched successfully");
+        return expensesGroupModel;
     }
 }

@@ -108,7 +108,7 @@ public class ExpensesGroupSqliteDatabaseAdapter {
     public ExpensesGroupModel getExpensesGroupById(String id) {
         Cursor cursor = null;
         String[] colums = { expensesGroupSqliteDatabaseHelper.ID, expensesGroupSqliteDatabaseHelper.GROUP_NAME};
-        String[]  selectionArgs = {id};
+        String[]  selectionArgs = {id + ""};
 
         cursor = expensesGroupSqliteDatabaseHelper.getWritableDatabase().query(expensesGroupSqliteDatabaseHelper.TABLE_NAME, colums, expensesGroupSqliteDatabaseHelper.ID +"=?", selectionArgs, null, null, null);
 

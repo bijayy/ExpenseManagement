@@ -100,9 +100,13 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
             switch (view.getId()) {
                 case R.id.btnEditExpenseGroup:
                     ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter = new ExpensesGroupSqliteDatabaseAdapter(layoutInflater.getContext());
-                    expensesGroupSqliteDatabaseAdapter.updateExpensesGroupById();
+                    ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
+                    expensesGroupModel.ID = getLayoutPosition();
 
-                    Toast.makeText(layoutInflater.getContext(), "", Toast.LENGTH_SHORT).show();
+                    //xpensesGroupSqliteDatabaseAdapter.updateExpensesGroupById();
+
+                    //Toast.makeText(layoutInflater.getContext(), "", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "[onClick][btnEditExpenseGroup] item position: " + getLayoutPosition());
                     break;
 
                 case R.id.btnDeleteExpenseGroup:

@@ -5,5 +5,6 @@ public class PersonModel {
     public String Name;
     public String MobileNumber;
     public String Email;
+    public ExpensesGroupModel ExpenseGroupModel;
     public ExpensesModel ExpensesModel;
 }
