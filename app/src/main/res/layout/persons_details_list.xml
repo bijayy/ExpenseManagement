@@ -12,54 +12,36 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:stretchColumns="0,1" >
 
         <TableRow>
             <TextView
-                android:id="@+id/tvExpenseId"
-                android:text="1" />
+                android:id="@+id/tvGroupIdName"
+                android:text="Group" />
 
             <TextView
-                android:id="@+id/tvExpenseDate"
-                android:text="Expense Date" />
+                android:id="@+id/tvPersonIdName"
+                android:text="PersonId" />
         </TableRow>
 
         <TableRow>
             <TextView
-                android:id="@+id/tvByWhom"
-                android:text="By Whom" />
+                android:id="@+id/tvPersonMobileNumber"
+                android:text="Person Mobile" />
 
             <TextView
-                android:id="@+id/tvForWhom"
-                android:text="For Whom" />
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:id="@+id/tvProductName"
-                android:text="Product Name" />
-
-            <TextView
-                android:id="@+id/tvAmount"
-                android:text="Amount" />
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:id="@+id/tvPurpose"
+                android:id="@+id/tvPersonEmail"
                 android:layout_span="2"
-                android:text="Purpose" />
+                android:text="Person Email" />
         </TableRow>
 
         <TableRow>
             <Button
-                android:id="@+id/btnEditExpense"
+                android:id="@+id/btnEditPerson"
                 android:text="Edit" />
 
             <Button
-                android:id="@+id/btnDeleteExpense"
+                android:id="@+id/btnDeletePerson"
                 android:text="Delete" />
         </TableRow>
 

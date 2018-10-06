@@ -12,42 +12,54 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:stretchColumns="0,1" >
 
         <TableRow>
             <TextView
-                android:id="@+id/tvGroupId"
-                android:text="1" />
+                android:id="@+id/tvExpenseId"
+                android:text="Expense Id" />
 
             <TextView
-                android:id="@+id/tvPersonId"
-                android:text="PersonId" />
+                android:id="@+id/tvExpenseDate"
+                android:text="Expense Date" />
         </TableRow>
 
         <TableRow>
             <TextView
-                android:id="@+id/tvPersonName"
-                android:text="Person Name" />
+                android:id="@+id/tvByWhom"
+                android:text="By Whom" />
 
             <TextView
-                android:id="@+id/tvPersonMobileNumber"
-                android:text="Person Mobile" />
+                android:id="@+id/tvForWhom"
+                android:text="For Whom" />
         </TableRow>
 
         <TableRow>
             <TextView
-                android:id="@+id/tvPersonEmail"
+                android:id="@+id/tvProductName"
+                android:text="Product Name" />
+
+            <TextView
+                android:id="@+id/tvAmount"
+                android:text="Amount" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvPurpose"
                 android:layout_span="2"
-                android:text="Person Email" />
+                android:text="Purpose" />
         </TableRow>
 
         <TableRow>
             <Button
-                android:id="@+id/btnEditPerson"
+                android:id="@+id/btnEditExpense"
                 android:text="Edit" />
 
             <Button
-                android:id="@+id/btnDeletePerson"
+                android:id="@+id/btnDeleteExpense"
                 android:text="Delete" />
         </TableRow>
 
