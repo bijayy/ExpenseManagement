@@ -3,6 +3,7 @@ package com.example.bijay.expensemanagement.Views.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import com.example.bijay.expensemanagement.R;
  */
 public class ViewExpenseByDateRangeFragment extends Fragment {
 
+    private static final String TAG = ViewExpenseByDateRangeFragment.class.getSimpleName();
 
     public ViewExpenseByDateRangeFragment() {
         // Required empty public constructor
+        Log.d(TAG, "[ViewExpenseByDateRangeFragment] constructor initialization is done");
     }
 
 
@@ -24,7 +27,10 @@ public class ViewExpenseByDateRangeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_expense_by_date_range, container, false);
+        View view =  inflater.inflate(R.layout.fragment_view_expense_by_date_range, container, false);
+
+        Log.d(TAG, "[onCreateView] Inflate the layout for this fragment is done");
+        return view;
     }
 
 }

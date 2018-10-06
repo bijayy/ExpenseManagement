@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".Views.Fragments.ExpensesFilterFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filter By:" />
+
+    <RadioGroup
+        android:id="@+id/radioBtnGroupExpensesFilters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioBtnFilterByExpensesGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Expense Group" />
+
+        <RadioButton
+            android:id="@+id/radioBtnFilterByExpenses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Expenses" />
+
+        <RadioButton
+            android:id="@+id/radioBtnFilterByPersons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Persons" />
+
+        <RadioButton
+            android:id="@+id/radioBtnFilterByDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date Range" />
+
+    </RadioGroup>
+</LinearLayout>
