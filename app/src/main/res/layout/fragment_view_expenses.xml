@@ -6,8 +6,27 @@
     android:orientation="vertical"
     tools:context=".Views.Fragments.ViewExpensesFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvTotalExpensesText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Expenses: " />
+        <TextView
+            android:id="@+id/tvTotalExpenses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
     <TextView
-        android:id="@+id/tvViewPersons"
+        android:id="@+id/tvViewExpensesText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
