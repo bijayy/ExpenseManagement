@@ -3,12 +3,14 @@ package com.example.bijay.expensemanagement.Views.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -106,6 +108,8 @@ public class ViewExpensesGroupsFragment extends Fragment implements ExpenseGroup
 
         ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter = new ExpensesGroupSqliteDatabaseAdapter(getContext());
         expensesGroupSqliteDatabaseAdapter.deleteExpensesGroupById(idToDelete);
+
+        Snackbar.make(getView(), Html.fromHtml("<font color=\"#00ff99\">Expense Group: [" + textView.getText().toString() + "] deleted successfully</font>"), Snackbar.LENGTH_SHORT).show();
         Log.d(TAG,  "[OnEditClickListener] Clicked Item Data is: " + textView.getText().toString());
     }
 

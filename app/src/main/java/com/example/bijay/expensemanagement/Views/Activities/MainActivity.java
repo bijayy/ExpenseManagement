@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements ViewExpensesGroup
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
         showMainFragment();
 
         Log.d(TAG, "[onCreate] is done");

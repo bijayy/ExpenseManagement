@@ -2,9 +2,12 @@ package com.example.bijay.expensemanagement.Views.Fragments;
 
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +47,7 @@ public class AddExpenseFragment extends Fragment implements View.OnClickListener
 
     private Button btnSave;
     private Button btnCancel;
+    private ConstraintLayout addExpenseLayout;
     //private CalenderView calendarView;
 
     public AddExpenseFragment() {
@@ -66,6 +70,7 @@ public class AddExpenseFragment extends Fragment implements View.OnClickListener
         etProductName = view.findViewById(R.id.etProductName);
         btnSave = view.findViewById(R.id.btnSave);
         btnCancel = view.findViewById(R.id.btnCancel);
+        addExpenseLayout = view.findViewById(R.id.addExpenseLayout);
 
         btnCancel.setOnClickListener(this);
         btnSave.setOnClickListener(this);
@@ -89,10 +94,10 @@ public class AddExpenseFragment extends Fragment implements View.OnClickListener
                     AddExpense();
                     reset();
 
-                    Toast.makeText(getContext(), "Expense added successfully", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(addExpenseLayout, Html.fromHtml("<font color=\"#00ff99\">Expense added successfully</font>"), Snackbar.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getContext(), "Please select Persons", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(addExpenseLayout, Html.fromHtml("<font color=\"#ffff99\">Please select Persons</font>"), Snackbar.LENGTH_SHORT).show();
                 }
 
                 Log.d(TAG, "[onClick] [btnSave] is called");

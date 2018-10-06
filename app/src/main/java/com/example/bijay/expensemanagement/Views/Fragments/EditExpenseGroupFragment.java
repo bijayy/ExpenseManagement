@@ -2,16 +2,20 @@ package com.example.bijay.expensemanagement.Views.Fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.bijay.expensemanagement.Data.Sqlite.Adapter.ExpensesGroupSqliteDatabaseAdapter;
@@ -29,6 +33,7 @@ public class EditExpenseGroupFragment extends Fragment implements View.OnClickLi
 
     private EditText etEditGroup;
     private Button btnEditExpensesGroup;
+    private FrameLayout editExpenseGroupLayout;
     private static ExpensesGroupModel expensesGroupModel;
 
     public EditExpenseGroupFragment() {
@@ -44,6 +49,7 @@ public class EditExpenseGroupFragment extends Fragment implements View.OnClickLi
         View view = inflater.inflate(R.layout.fragment_edit_expense_group, container, false);
         etEditGroup = view.findViewById(R.id.etEditGroup);
         btnEditExpensesGroup = view.findViewById(R.id.btnEditExpensesGroup);
+        editExpenseGroupLayout = view.findViewById(R.id.editExpenseGroupLayout);
         btnEditExpensesGroup.setOnClickListener(this);
 
         Log.d(TAG, "[onCreateView] Inflate the layout for this fragment is done");
@@ -79,11 +85,11 @@ public class EditExpenseGroupFragment extends Fragment implements View.OnClickLi
                 fragmentTransaction.commit();
 
                 Log.d(TAG, "[onClick][btnEditExpensesGroup] Expense group: " + expensesGroupModel.GroupName + " updated successfully");
-                Toast.makeText(getContext(), "Expense group: " + expensesGroupModel.GroupName + " updated successfully", Toast.LENGTH_SHORT).show();
+                Snackbar.make(editExpenseGroupLayout, Html.fromHtml("<font color=\"#00ff99\">Expense group: " + expensesGroupModel.GroupName + " updated successfully</font>"), Snackbar.LENGTH_SHORT).show();
             }
             else
             {
-                Toast.makeText(getContext(), "Expense group: " + expensesGroupModel.GroupName + " update failed", Toast.LENGTH_SHORT).show();
+                Snackbar.make(editExpenseGroupLayout, Html.fromHtml("<font color=\"#ff5050\">Expense group: " + expensesGroupModel.GroupName + " update failed</font>"), Snackbar.LENGTH_SHORT).show();
             }
         }
     }

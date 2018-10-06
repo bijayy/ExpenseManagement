@@ -3,9 +3,11 @@ package com.example.bijay.expensemanagement.Views.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -38,6 +41,7 @@ public class AddPersonFragment extends Fragment implements View.OnClickListener 
     private EditText etPersonName;
     private EditText etPersonMobileNumber;
     private EditText etPersonEmail;
+    private LinearLayout addPersonLayout;
 
     public AddPersonFragment() {
         // Required empty public constructor
@@ -56,6 +60,7 @@ public class AddPersonFragment extends Fragment implements View.OnClickListener 
         etPersonName= view.findViewById(R.id.etPersonName);
         etPersonMobileNumber = view.findViewById(R.id.etPersonMobile);
         etPersonEmail= view.findViewById(R.id.etPersonEmail);
+        addPersonLayout = view.findViewById(R.id.addPersonLayout);
 
         btnAddPerson.setOnClickListener(this);
         btnCancelPerson.setOnClickListener(this);
@@ -85,10 +90,10 @@ public class AddPersonFragment extends Fragment implements View.OnClickListener 
                     addPerson();
                     reset();
 
-                    Toast.makeText(getContext(), "Person added successfully", Toast.LENGTH_SHORT).show();
+                     Snackbar.make(addPersonLayout, Html.fromHtml("<font color=\"#00ff99\">Person added successfully</font>"), Snackbar.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getContext(), "Please select expense group", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(addPersonLayout, Html.fromHtml("<font color=\"#ffff99\">Please select expense group</font>"), Snackbar.LENGTH_SHORT).show();
                 }
 
                 Log.d(TAG, "[onClick] [btnAddPerson] is called");

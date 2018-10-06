@@ -2,10 +2,12 @@ package com.example.bijay.expensemanagement.Views.Fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,6 +79,7 @@ public class AddExpenseGroupFragment extends Fragment implements View.OnClickLis
         expensesGroupModel.GroupName = etGroupName.getText().toString();
         expensesGroupSqliteDatabaseAdapter.addExpensesGroup(expensesGroupModel);
 
+        Snackbar.make(etGroupName, Html.fromHtml("<font color=\"#00ff99\">Expense Group: " + expensesGroupModel.GroupName + "added successfully</font>"), Snackbar.LENGTH_SHORT).show();
         Log.d(TAG, "[onClick][btnAddGroup] Expense group: " + expensesGroupModel.GroupName + " added successfully");
     }
 
