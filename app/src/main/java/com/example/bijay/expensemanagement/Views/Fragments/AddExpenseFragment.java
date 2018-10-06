@@ -102,6 +102,7 @@ public class AddExpenseFragment extends Fragment implements View.OnClickListener
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.idMainActivityLayout, new MainFragment(), "MainFragment");
+                transaction.disallowAddToBackStack();
                 transaction.commit();
 
                 Log.d(TAG, "[onClick] [btnCancel] is called, redirected to [MainFragment]");

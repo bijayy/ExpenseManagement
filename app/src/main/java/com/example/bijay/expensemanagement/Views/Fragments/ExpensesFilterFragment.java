@@ -73,7 +73,7 @@ public class ExpensesFilterFragment extends DialogFragment implements RadioGroup
                 break;
         }
 
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.disallowAddToBackStack();
         fragmentTransaction.commit();
         this.getDialog().dismiss();
 

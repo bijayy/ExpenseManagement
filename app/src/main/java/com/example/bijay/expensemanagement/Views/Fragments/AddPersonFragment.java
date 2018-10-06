@@ -98,6 +98,7 @@ public class AddPersonFragment extends Fragment implements View.OnClickListener 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.idMainActivityLayout, new MainFragment(), "MainFragment");
+                transaction.disallowAddToBackStack();
                 transaction.commit();
 
                 Log.d(TAG, "[onClick] [btnCancelPerson] is called, redirected to [MainFragment]");

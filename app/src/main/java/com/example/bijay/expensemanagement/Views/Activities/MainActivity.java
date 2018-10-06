@@ -2,6 +2,7 @@ package com.example.bijay.expensemanagement.Views.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -34,11 +35,7 @@ public class MainActivity extends AppCompatActivity implements ViewExpensesGroup
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.idMainActivityLayout, new MainFragment(), "MainFragment");
-        transaction.commit();
+        showMainFragment();
 
         Log.d(TAG, "[onCreate] is done");
     }
@@ -57,6 +54,54 @@ public class MainActivity extends AppCompatActivity implements ViewExpensesGroup
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(editExpenseGroupFragment, "EditExpenseGroupFragment");
+        fragmentTransaction.disallowAddToBackStack();
         fragmentTransaction.commit();
+
+        Log.d(TAG, "[sendData] sending data from [MainActivity] to [EditExpenseGroupFragment] for edit");
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!isMainFragmentVisible()) {
+            showMainFragment();
+
+            Log.d(TAG, "[onBackPressed] showing the main fragment");
+            return;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        MainActivity.super.onBackPressed();
+
+                        Log.d(TAG, "[onBackPressed] closing the app");
+                    }
+                }).create().show();
+
+        Log.d(TAG, "[onBackPressed] not closing instead showing the main fragment");
+    }
+
+    private void showMainFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.idMainActivityLayout, new MainFragment(), "MainFragment");
+        transaction.disallowAddToBackStack();
+        transaction.commit();
+    }
+
+    private boolean isMainFragmentVisible() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.idMainActivityLayout);
+
+        Log.d(TAG, "[isMainFragmentVisible] main fragment: " + fragment);
+
+        if(fragment.getClass().getSimpleName().equals("MainFragment"))
+            return true;
+        else
+            return false;
     }
 }

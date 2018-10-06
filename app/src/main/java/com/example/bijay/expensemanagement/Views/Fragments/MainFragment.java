@@ -123,7 +123,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 break;
         }
 
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.disallowAddToBackStack();
         fragmentTransaction.commit();
     }
 }

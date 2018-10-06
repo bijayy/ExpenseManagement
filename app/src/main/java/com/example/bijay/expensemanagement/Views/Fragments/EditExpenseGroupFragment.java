@@ -4,12 +4,15 @@ package com.example.bijay.expensemanagement.Views.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.bijay.expensemanagement.Data.Sqlite.Adapter.ExpensesGroupSqliteDatabaseAdapter;
 import com.example.bijay.expensemanagement.Models.ExpensesGroupModel;
@@ -21,7 +24,7 @@ import java.util.regex.Pattern;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EditExpenseGroupFragment extends DialogFragment implements View.OnClickListener {
+public class EditExpenseGroupFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = EditExpenseGroupFragment.class.getSimpleName();
 
     private EditText etEditGroup;
@@ -66,9 +69,22 @@ public class EditExpenseGroupFragment extends DialogFragment implements View.OnC
             ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
             expensesGroupModel.GroupName = etEditGroup.getText().toString();
             expensesGroupModel.ID = this.expensesGroupModel.ID;
-            expensesGroupSqliteDatabaseAdapter.updateExpensesGroup(expensesGroupModel);
-            Log.d(TAG, "[onClick][btnEditExpensesGroup] Expense group: " + expensesGroupModel.GroupName + " updated successfully");
-            getDialog().dismiss();
+            int numberOfRowUdpated = expensesGroupSqliteDatabaseAdapter.updateExpensesGroup(expensesGroupModel);
+
+            if(numberOfRowUdpated > 0) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.idMainActivityLayout, new ViewExpensesGroupsFragment(), "ViewExpensesGroupsFragment");
+                fragmentTransaction.disallowAddToBackStack();
+                fragmentTransaction.commit();
+
+                Log.d(TAG, "[onClick][btnEditExpensesGroup] Expense group: " + expensesGroupModel.GroupName + " updated successfully");
+                Toast.makeText(getContext(), "Expense group: " + expensesGroupModel.GroupName + " updated successfully", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getContext(), "Expense group: " + expensesGroupModel.GroupName + " update failed", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

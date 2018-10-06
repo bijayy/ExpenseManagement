@@ -81,7 +81,7 @@ public class ViewExpensesGroupsFragment extends Fragment implements ExpenseGroup
     }
 
     @Override
-    public ExpensesGroupModel OnEditClickListener(View view, int position) {
+    public void OnEditClickListener(View view, int position) {
         if(dataBetweenFragment != null) {
             View view1 = expenseGroupRecyclerView.findContainingItemView(view);
             TextView textView = view1.findViewById(R.id.tvExpenseGroupIdName);
@@ -89,14 +89,14 @@ public class ViewExpensesGroupsFragment extends Fragment implements ExpenseGroup
 
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(new EditExpenseGroupFragment(), "EditExpenseGroupFragment");
+            fragmentTransaction.replace(R.id.idMainActivityLayout, new EditExpenseGroupFragment(), "EditExpenseGroupFragment");
+            fragmentTransaction.disallowAddToBackStack();
             fragmentTransaction.commit();
             Log.d(TAG, "[OnEditClickListener] Clicked Item Data is: " + textView.getText().toString());
-
-            return getGroupExpenseGroup(textView.getText().toString());
         }
-
-        return null;
+        else {
+            Log.d(TAG, "[OnEditClickListener] [dataBetweenFragment] is not implemented in the Activity: " + getActivity().getClass().getSimpleName());
+        }
     }
 
     @Override

@@ -68,7 +68,7 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
     }
 
     public interface IEditDeleteClickListener {
-        ExpensesGroupModel OnEditClickListener(View view, int position);
+        void OnEditClickListener(View view, int position);
         void OnDeleteListener(View view, int position);
     }
 
@@ -114,12 +114,7 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
                     expensesGroupModel.ID = getLayoutPosition();*/
                     if(listener != null)
                     {
-                        ExpensesGroupModel expensesGroup = listener.OnEditClickListener(view, getLayoutPosition());
-                        ExpensesGroupModel expensesGroupModel = expensesGroupModels.get(getLayoutPosition());
-                        expensesGroupModel.ID = expensesGroup.ID;
-                        expensesGroupModel.GroupName = expensesGroup.GroupName;
-
-                        //notifyItemChanged(getLayoutPosition());
+                        listener.OnEditClickListener(view, getLayoutPosition());
                     }
                     //xpensesGroupSqliteDatabaseAdapter.updateExpensesGroupById();
                     //Toast.makeText(layoutInflater.getContext(), "", Toast.LENGTH_SHORT).show();
