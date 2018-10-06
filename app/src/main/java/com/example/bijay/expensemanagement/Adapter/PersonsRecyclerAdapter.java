@@ -86,7 +86,13 @@ public class PersonsRecyclerAdapter extends RecyclerView.Adapter<PersonsRecycler
 
         //Setting button text present in the "recycler_view_item.xml" with employee name
         void sendData(PersonModel personModel) {
-            tvGroupIdName.setText(personModel.ExpenseGroupModel.ID + ". " + personModel.ExpenseGroupModel.GroupName);
+            if(personModel.ExpenseGroupModel != null) {
+                tvGroupIdName.setText(personModel.ExpenseGroupModel.ID + ". " + personModel.ExpenseGroupModel.GroupName);
+            }
+            else {
+                tvGroupIdName.setText("Not Available");
+            }
+
             tvPersonIdName.setText(personModel.ID + ". " + personModel.Name);
             tvPersonMobileNumber.setText(personModel.MobileNumber);
             tvPersonEmail.setText(personModel.Email);

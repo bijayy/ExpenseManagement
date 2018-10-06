@@ -162,6 +162,10 @@ public class PersonSqliteDatabaseAdapter {
     private ExpensesGroupModel getExpensesGroupById(String id) {
         ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter = new ExpensesGroupSqliteDatabaseAdapter(context);
         ExpensesGroupModel expensesGroupModel = expensesGroupSqliteDatabaseAdapter.getExpensesGroupById(id);
+        if(expensesGroupModel == null) {
+            Log.d(TAG, "[getExpenseGroups] No expense group available for id: " + id);
+            return null;
+        }
 
         Log.d(TAG, "[getExpenseGroups] Expense group: "+ expensesGroupModel.GroupName +" fetched successfully");
         return expensesGroupModel;

@@ -90,7 +90,6 @@ public class ViewExpensesGroupsFragment extends Fragment implements ExpenseGroup
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.idMainActivityLayout, new EditExpenseGroupFragment(), "EditExpenseGroupFragment");
-            fragmentTransaction.disallowAddToBackStack();
             fragmentTransaction.commit();
             Log.d(TAG, "[OnEditClickListener] Clicked Item Data is: " + textView.getText().toString());
         }
