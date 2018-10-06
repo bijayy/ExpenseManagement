@@ -1,10 +1,12 @@
-package com.example.bijay.expensemanagement.Data;
+package com.example.bijay.expensemanagement.Data.Sqlite.Adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.bijay.expensemanagement.Data.Sqlite.Helper.ExpensesSqliteDatabaseHelper;
+import com.example.bijay.expensemanagement.Data.Sqlite.Helper.PersonSqliteDatabaseHelper;
 import com.example.bijay.expensemanagement.Models.ExpensesModel;
 
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class ExpensesSqliteDatabaseAdapter {
             contentValues.put(expensesSqliteDatabaseHelper.PURPOSE, expense.Purpose);
             contentValues.put(expensesSqliteDatabaseHelper.PRODUCT_NAME, expense.ProductName);
             contentValues.put(expensesSqliteDatabaseHelper.PRICE, expense.Amount);
-            contentValues.put(expensesSqliteDatabaseHelper.PERSON_ID, expense.PersonId);
+            //contentValues.put(expensesSqliteDatabaseHelper.PERSON_ID, expense.Person.ID);
 
             Log.d(TAG, "addExpense() successfully added expense details running in thread: " + Thread.currentThread().getName());
             return expensesSqliteDatabaseHelper.getWritableDatabase().insert(expensesSqliteDatabaseHelper.TABLE_NAME, null, contentValues);
@@ -56,7 +58,7 @@ public class ExpensesSqliteDatabaseAdapter {
             contentValues.put(expensesSqliteDatabaseHelper.PURPOSE, expense.Purpose);
             contentValues.put(expensesSqliteDatabaseHelper.PRODUCT_NAME, expense.ProductName);
             contentValues.put(expensesSqliteDatabaseHelper.PRICE, expense.Amount);
-            contentValues.put(expensesSqliteDatabaseHelper.PERSON_ID, expense.PersonId);
+            //contentValues.put(expensesSqliteDatabaseHelper.PERSON_ID, expense.Person.ID);
 
             String[] whereArgs = {expense.ID +""};
             int totalRowUpdated = expensesSqliteDatabaseHelper.getWritableDatabase().update(expensesSqliteDatabaseHelper.TABLE_NAME, contentValues, expensesSqliteDatabaseHelper.ID + "=?", whereArgs);
@@ -115,7 +117,7 @@ public class ExpensesSqliteDatabaseAdapter {
             expensesModel.ByWhom = cursor.getString(byWhomIndex);
             expensesModel.ForWhom = cursor.getString(forWhomIndex);
             expensesModel.Purpose = cursor.getString(purposeIndex);
-            expensesModel.PersonId = cursor.getInt(personIdIndex);
+            //expensesModel.Person.ID = cursor.getInt(personIdIndex);
             expensesModel.ProductName = cursor.getString(productNameIndex);
             expensesModel.Amount = cursor.getString(priceIndex);
 
@@ -158,7 +160,7 @@ public class ExpensesSqliteDatabaseAdapter {
             expensesModel.ByWhom = cursor.getString(byWhomIndex);
             expensesModel.ForWhom = cursor.getString(forWhomIndex);
             expensesModel.Purpose = cursor.getString(purposeIndex);
-            expensesModel.PersonId = cursor.getInt(personIdIndex);
+            //expensesModel.Person.ID = cursor.getInt(personIdIndex);
             expensesModel.ProductName = cursor.getString(productNameIndex);
             expensesModel.Amount = cursor.getString(priceIndex);
 

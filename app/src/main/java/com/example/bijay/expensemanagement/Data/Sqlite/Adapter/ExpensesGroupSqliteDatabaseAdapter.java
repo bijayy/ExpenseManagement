@@ -1,10 +1,12 @@
-package com.example.bijay.expensemanagement.Data;
+package com.example.bijay.expensemanagement.Data.Sqlite.Adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.bijay.expensemanagement.Data.Sqlite.Helper.ExpensesGroupSqliteDatabaseHelper;
+import com.example.bijay.expensemanagement.Data.Sqlite.Helper.PersonSqliteDatabaseHelper;
 import com.example.bijay.expensemanagement.Models.ExpensesGroupModel;
 
 import java.util.ArrayList;

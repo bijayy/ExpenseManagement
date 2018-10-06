@@ -1,10 +1,11 @@
-package com.example.bijay.expensemanagement.Data;
+package com.example.bijay.expensemanagement.Data.Sqlite.Adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.bijay.expensemanagement.Data.Sqlite.Helper.PersonSqliteDatabaseHelper;
 import com.example.bijay.expensemanagement.Models.PersonModel;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class PersonSqliteDatabaseAdapter {
             contentValues.put(personSqliteDatabaseHelper.NAME, person.Name);
             contentValues.put(personSqliteDatabaseHelper.PHONE_NUMBER, person.MobileNumber);
             contentValues.put(personSqliteDatabaseHelper.EMAIL, person.Email);
-            contentValues.put(personSqliteDatabaseHelper.GROUP_ID, person.GroupID);
+            //contentValues.put(personSqliteDatabaseHelper.GROUP_ID, person.ExpensesGroup.ID);
 
             Log.d(TAG, "addPerson() successfully added person details running in thread: " + Thread.currentThread().getName());
             return personSqliteDatabaseHelper.getWritableDatabase().insert(personSqliteDatabaseHelper.TABLE_NAME, null, contentValues);
@@ -105,7 +106,7 @@ public class PersonSqliteDatabaseAdapter {
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
-            personModel.GroupID = cursor.getInt(groupIDIndex);
+            //personModel.ExpensesGroup.ID = cursor.getInt(groupIDIndex);
 
             personModelList.add(personModel);
         }
@@ -141,7 +142,7 @@ public class PersonSqliteDatabaseAdapter {
             personModel.Name = cursor.getString(nameIndex);
             personModel.MobileNumber = cursor.getString(phoneNumberIndex);
             personModel.Email = cursor.getString(emailIndex);
-            personModel.GroupID = cursor.getInt(groupIDIndex);
+            //personModel.ExpensesGroup.ID = cursor.getInt(groupIDIndex);
 
             Log.d(TAG, "getPersonById() found record of person id: "+ id +" running in thread: " + Thread.currentThread().getName());
             return personModel;

@@ -1,4 +1,4 @@
-package com.example.bijay.expensemanagement.Data;
+package com.example.bijay.expensemanagement.Data.Sqlite.Helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,15 +9,15 @@ public class ExpensesSqliteDatabaseHelper  extends SQLiteOpenHelper {
 
     private static final String TAG = PersonSqliteDatabaseHelper.class.getSimpleName();
 
-    static final String TABLE_NAME = "Expenses";
-    static final String DATE = "Date";
-    static final String BY_WHOM = "ByWhom";
-    static final String FOR_WHOM = "ForWhom";
-    static final String PURPOSE = "Purpose";
-    static final String PRODUCT_NAME = "ProductName";
-    static final String PRICE = "Price";
-    static final String ID = "_id";
-    static final String PERSON_ID = "PersonId";
+    public static final String TABLE_NAME = "Expenses";
+    public static final String DATE = "Date";
+    public static final String BY_WHOM = "ByWhom";
+    public static final String FOR_WHOM = "ForWhom";
+    public static final String PURPOSE = "Purpose";
+    public static final String PRODUCT_NAME = "ProductName";
+    public static final String PRICE = "Price";
+    public static final String ID = "_id";
+    public static final String PERSON_ID = "PersonId";
 
     private static final String DATABASE_NAME = "Expenses.db";
     private static final int DATABASE_VERSION = 1;
