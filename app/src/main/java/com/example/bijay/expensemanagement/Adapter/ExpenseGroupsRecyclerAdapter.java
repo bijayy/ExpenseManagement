@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bijay.expensemanagement.Data.Sqlite.Adapter.ExpensesGroupSqliteDatabaseAdapter;
 import com.example.bijay.expensemanagement.Models.ExpensesGroupModel;
 import com.example.bijay.expensemanagement.R;
 
@@ -64,16 +65,14 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
     //MyViewHolder class which initializes the Button present in the "recycler_view_item.xml" and assign the data into this.
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView tvExpenseGroupId;
-        TextView tvExpenseGroupName;
+        TextView tvExpenseGroupIdName;
         Button editExpenseGroup;
         Button deleteExpenseGroup;
 
         //Getting button present in the "recycler_view_item.xml"
         MyViewHolder(View viewItem) {
             super(viewItem);
-            tvExpenseGroupId = viewItem.findViewById(R.id.tvExpenseGroupId);
-            tvExpenseGroupName = viewItem.findViewById(R.id.tvExpenseGroupName);
+            tvExpenseGroupIdName = viewItem.findViewById(R.id.tvExpenseGroupIdName);
             editExpenseGroup = viewItem.findViewById(R.id.btnEditExpenseGroup);
             deleteExpenseGroup = viewItem.findViewById(R.id.btnDeleteExpenseGroup);
 
@@ -82,8 +81,7 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
 
         //Setting button text present in the "recycler_view_item.xml" with employee name
         void sendData(ExpensesGroupModel expensesGroupModel) {
-            tvExpenseGroupId.setText(expensesGroupModel.ID +"");
-            tvExpenseGroupName.setText(expensesGroupModel.GroupName);
+            tvExpenseGroupIdName.setText(expensesGroupModel.ID +". " + expensesGroupModel.GroupName);
 
             Log.d(TAG, "[sendData] group id: "+ expensesGroupModel.ID +" group name: " + expensesGroupModel.GroupName);
         }
@@ -99,8 +97,24 @@ public class ExpenseGroupsRecyclerAdapter extends RecyclerView.Adapter<ExpenseGr
         //Displaying Toast on click of button present in the "recycler_view_item.xml"
         @Override
         public void onClick(View view) {
-            Toast.makeText(layoutInflater.getContext(), "clicked: ${(v as Button).text}", Toast.LENGTH_SHORT).show();
+            switch (view.getId()) {
+                case R.id.btnEditExpenseGroup:
+                    ExpensesGroupSqliteDatabaseAdapter expensesGroupSqliteDatabaseAdapter = new ExpensesGroupSqliteDatabaseAdapter(layoutInflater.getContext());
+                    expensesGroupSqliteDatabaseAdapter.updateExpensesGroupById();
 
+                    Toast.makeText(layoutInflater.getContext(), "", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case R.id.btnDeleteExpenseGroup:
+
+
+                    Toast.makeText(layoutInflater.getContext(), "clicked: ${(v as Button).text}", Toast.LENGTH_SHORT).show();
+                    break;
+
+                default:
+                    Log.d(TAG, "[onClick][default] Not Implemented");
+                    break;
+            }
             Log.d(TAG, "[onClick] is triggered");
         }
     }

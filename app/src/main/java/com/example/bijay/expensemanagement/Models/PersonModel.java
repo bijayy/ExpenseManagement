@@ -5,5 +5,5 @@ public class PersonModel {
     public String Name;
     public String MobileNumber;
     public String Email;
-    public int GroupID;
+    public ExpensesModel ExpensesModel;
 }

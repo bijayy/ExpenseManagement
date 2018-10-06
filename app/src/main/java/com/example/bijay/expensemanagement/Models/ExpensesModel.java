@@ -2,7 +2,6 @@ package com.example.bijay.expensemanagement.Models;
 
 public class ExpensesModel {
     public int ID;
-    public int PersonId;
     public String Date;
     public String ByWhom;
     public String ForWhom;

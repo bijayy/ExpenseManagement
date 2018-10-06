@@ -16,18 +16,12 @@
         android:layout_marginRight="5dp">
 
         <TextView
-            android:id="@+id/tvExpenseGroupId"
+            android:id="@+id/tvExpenseGroupIdName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
-            android:text="1" />
-
-        <TextView
-            android:id="@+id/tvExpenseGroupName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="First Group" />
+            android:text="Group" />
 
         <Button
             android:id="@+id/btnEditExpenseGroup"

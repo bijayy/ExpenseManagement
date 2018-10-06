@@ -1,149 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainActivityLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="20dp">
+    android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/mainActivityLayout"
+    <LinearLayout
+        android:id="@+id/idMainActivityLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
 
-   <!-- <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:stretchColumns="0,1"
-        tools:context=".Views.Activities.MainActivity">
-
-        <TableRow>
-            <TextView
-                android:id="@+id/tvExpenseMenuTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_span="2"
-                android:text="Expenses Menu"
-                android:textSize="20sp" />
-        </TableRow>
-
-        <TableRow>
-            <Button
-                android:id="@+id/btnPrepareExpensesList"
-                android:text="Prepare" />
-
-            <Button
-                android:id="@+id/btnAddExpenses"
-                android:layout_marginLeft="10dp"
-                android:text="Add" />
-        </TableRow>
-
-        <TableRow>
-            <Button
-                android:id="@+id/btnCalculateExpenses"
-                android:text="Calculate" />
-
-            <Button
-                android:id="@+id/btnDeleteExpenses"
-                android:layout_marginLeft="10dp"
-                android:text="Delete" />
-        </TableRow>
-
-        <TableRow>
-            <Button
-                android:id="@+id/btnUpdate"
-                android:text="Update" />
-
-            <Button
-                android:id="@+id/btnViewExpenses"
-                android:layout_marginLeft="10dp"
-                android:text="View" />
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:id="@+id/tvGroupMenuTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_span="2"
-                android:text="Expenses Group Menu"
-                android:textSize="20sp" />
-        </TableRow>
-
-        <TableRow>
-            <Button
-                android:id="@+id/btnAddGroup"
-                android:text="Add" />
-
-            <Button
-                android:id="@+id/btnUpdateGroup"
-                android:layout_marginLeft="10dp"
-                android:text="Update" />
-        </TableRow>
-
-        <TableRow>
-            <Button
-                android:id="@+id/btnDeleteGroup"
-                android:text="Delete" />
-
-            <Button
-                android:id="@+id/btnViewGroups"
-                android:layout_marginLeft="10dp"
-                android:text="View" />
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:id="@+id/tvPersonMenuTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_span="2"
-                android:text="Persons Menu"
-                android:textSize="20sp" />
-        </TableRow>
-
-        <TableRow>
-            <Button
-                android:id="@+id/btnSetLimit"
-                android:text="Set Limit" />
-
-            <Button
-                android:id="@+id/btnViewAll"
-                android:layout_marginLeft="10dp"
-                android:text="View All" />
-        </TableRow>
-        <TableRow>
-
-            <Button
-                android:id="@+id/btnAddPerson"
-                android:text="Add" />
-
-            <Button
-                android:id="@+id/btnUpdatePerson"
-                android:layout_marginLeft="10dp"
-                android:text="Update" />
-        </TableRow>
-
-        <TableRow>
-            <Button
-                android:id="@+id/btnDeletePerson"
-                android:text="Delete" />
-
-            <Button
-                android:id="@+id/btnViewPerson"
-                android:layout_marginLeft="10dp"
-                android:text="View" />
-        </TableRow>
-    </TableLayout>-->
 </ScrollView>

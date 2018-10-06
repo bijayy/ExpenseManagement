@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/idFragmentMainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="0,1"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    tools:context=".Views.Fragments.MainFragment">
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/tvExpenseMenuTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_span="2"
+            android:text="Expenses Menu"
+            android:textSize="20sp" />
+    </TableRow>
+
+    <TableRow>
+
+        <Button
+            android:id="@+id/btnPrepareExpensesList"
+            android:text="Prepare" />
+
+        <Button
+            android:id="@+id/btnAddExpenses"
+            android:layout_marginLeft="10dp"
+            android:text="Add" />
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:id="@+id/btnViewExpenses"
+            android:text="View" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/tvGroupMenuTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_span="2"
+            android:text="Expenses Group Menu"
+            android:textSize="20sp" />
+    </TableRow>
+
+    <TableRow>
+
+        <Button
+            android:id="@+id/btnAddGroup"
+            android:text="Add" />
+
+        <Button
+            android:id="@+id/btnViewGroups"
+            android:layout_marginLeft="10dp"
+            android:text="View" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/tvPersonMenuTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_span="2"
+            android:text="Persons Menu"
+            android:textSize="20sp" />
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:id="@+id/btnSetLimit"
+            android:text="Set Limit" />
+
+        <Button
+            android:id="@+id/btnAddPerson"
+            android:text="Add" />
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:id="@+id/btnViewPerson"
+            android:text="View" />
+    </TableRow>
+</TableLayout>
